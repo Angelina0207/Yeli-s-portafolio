@@ -144,61 +144,54 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Galería visual mejorada ---
+# ---------- GALERÍA VISUAL ----------
+st.markdown("<div class='section'>", unsafe_allow_html=True)
 st.header("🖼️ Galería visual")
 
-secciones = {
-  "🎭 Expresión cultural": [
-    ("baile", "Concursos culturales que conectan mis raíces."),
-    ("baile2", "Movimiento que narra emoción."),
-    ("teatro", "Comunicación con cuerpo y voz.")
-  ],
-  "💚 Vida cotidiana": [
-    ("felicidad en amistades", "Conexión e inspiración diaria."),
-    ("felicidad en cinamon", "Reflexión entre cine y café."),
-    ("felicidad en cremolada", "La ternura de lo simple."),
-    ("gaseosa inka cola", "Ícono popular y creativo.")
-  ],
-  "🎨 Creatividad visual": [
-    ("guitarrra", "Armonía y ritmo creativo."),
-    ("medias", "Detalles que cuentan historias."),
-    ("victor jara", "Arte con mensaje social.")
-  ],
-  "🍽️ Cultura y sabor": [
-    ("alegría en comida", "Identidad y disfrute en un bocado."),
-    ("creación de kekes", "Estética y sabor familiar."),
-    ("comida", "Observación de lo cotidiano.")
-  ],
-  "🎬 Íconos": [
-    ("star wars", "Universos narrativos épicos."),
-    ("pulp", "Estéticas alternativas e impactantes."),
-    ("pulp+smirnoff", "Juego gráfico y humor.")
-  ],
-  "🌟 Comunidad": [
-    ("empoderate.pe", "Comunicación para el empoderamiento."),
-    ("actuar", "Empatía y exploración de roles.")
-  ]
+galeria = {
+    "🎭 Expresión cultural": {
+        "baile": "Participación en concursos culturales escolares que me conectaron con mis raíces.",
+        "baile2": "Una forma de expresión que habita el escenario y transmite emociones.",
+        "teatro": "Desde niña, el teatro me enseñó a comunicar con gestos y emociones."
+    },
+    "💚 Vida cotidiana": {
+        "felicidad en amistades": "Momentos de conexión que inspiran mis narrativas visuales.",
+        "felicidad en cinamon": "El cine y el café: espacios donde observo y reflexiono.",
+        "felicidad en cremolada": "La ternura de lo simple: una cremolada y una sonrisa.",
+        "gaseosa inka cola": "Ícono peruano que me conecta con lo popular y lo identitario."
+    },
+    "🎨 Creatividad visual": {
+        "guitarrra": "Experimentar el ritmo y la armonía, también desde el sonido.",
+        "medias": "Detalles únicos que expresan personalidad y juego visual.",
+        "victor jara": "Inspiración constante: arte con mensaje y sensibilidad social."
+    },
+    "🍽️ Cultura y sabor": {
+        "alegría en comida": "El acto de comer como espacio de identidad y disfrute.",
+        "creación de kekes": "Trabajo familiar con amor, estética y sabor.",
+        "comida": "Disfrutar lo cotidiano y observar cómo nos conecta."
+    },
+    "🎬 Referentes e íconos": {
+        "star wars": "Mi lado geek y visual se inspira en universos narrativos potentes.",
+        "pulp": "Contrastes visuales y culturas alternativas que me inspiran.",
+        "pulp+smirnoff": "Juego gráfico, estética y humor combinados."
+    },
+    "🌟 Acción y comunidad": {
+        "empoderate.pe": "Organización que promueve derechos, donde aporto desde la comunicación.",
+        "actuar": "Habitar otros roles me ayuda a empatizar y observar el mundo."
+    }
 }
 
-# Creamos pestañas por categoría
-tabs = st.tabs(list(secciones.keys()))
-for tab, categoria in zip(tabs, secciones):
-    with tab:
-        st.markdown("<div class='gallery-grid'>", unsafe_allow_html=True)
-        for key, desc in secciones[categoria]:
-            img_path = endorsements.get(key)
-            if img_path:
-                st.markdown(f"""
-                  <div class='gallery-item'>
-                    <img src='{img_path}' alt='{key}'>
-                    <p>{desc}</p>
-                  </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.warning(f"⚠️ Imagen no encontrada: {key}")
-        st.markdown("</div>", unsafe_allow_html=True)
+for titulo, imagenes in galeria.items():
+    st.subheader(titulo)
+    cols = st.columns(3)
+    for idx, (clave, desc) in enumerate(imagenes.items()):
+        with cols[idx % 3]:
+            st.markdown("<div class='image-card'>", unsafe_allow_html=True)
+            st.image(endorsements[clave], use_column_width=True)
+            st.caption(desc)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown("</div>", unsafe_allow_html=True)
 
 # -------------------- BIOGRAFÍA PROFESIONAL --------------------
 st.markdown("---")
