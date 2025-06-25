@@ -48,18 +48,29 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Portada con foto corregida ---
+# -------------------- PORTADA CORREGIDA (st.image) --------------------
+import os
+from pathlib import Path
+
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
+
+# Intentamos cargar la imagen local; si no existe, usamos un placeholder
+img_path = Path(info['Foto'])
+if img_path.is_file():
+    st.image(str(img_path), width=200, caption=None)
+else:
+    st.image(
+        'https://via.placeholder.com/200?text=Sin+Foto',
+        width=200,
+        caption="Foto no disponible"
+    )
+
 st.markdown(f"""
-<div class="profile-wrapper">
+<div style="text-align:center; margin-top:1rem;">
   <h2 style="color:#2e7d32;">✨ {info['Introducción']}</h2>
-  <img
-    src="{info['Foto']}"
-    class="profile-pic"
-    onerror="this.onerror=null;this.src='https://via.placeholder.com/200?text=Sin+Foto';"
-  >
 </div>
 """, unsafe_allow_html=True)
+
 
 # --- Sobre mí breve ---
 st.markdown(f"""
