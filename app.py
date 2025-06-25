@@ -70,55 +70,69 @@ st.markdown("---")
 
 # -------------------- BIO PROFESIONAL --------------------
 st.header("📖 Biografía profesional")
-with st.expander("Ver más sobre mi trayectoria"):
+
+st.markdown("<div class='section-box'>", unsafe_allow_html=True)
+
+with st.expander("💬 Quién soy", expanded=True):
     st.markdown("""
-<div class='section-box'>
-<b>💬 Quién soy</b><br>
-Soy una joven creativa que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito.
-<br><br>
-<b>📘 Formación</b><br>
-- C.E.P. Patrocinio de San José  
-- Cibertec (Excel Expert, Word Expert, Inkscape y Corel Draw)  
-- Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
-- Estudiante de Publicidad y Comunicaciones en la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS.  
-- Cursos en Estudios Generales Letras y Ciencias Sociales  
-- PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 2
-<br><br>
-<b>💡 Experiencia</b><br>
-- Community manager en VMTeam SAC.  
-- Voluntaria activa en Empoderate.Pe.  
-- Creadora de contenido social audiovisual.  
-- Participación en concursos culturales de danza tradicional y teatro escolar.  
-- Proyectos académicos y personales en narrativa digital.
-<br><br>
-<b>🛠️ Habilidades</b><br>
-- Edición de video (CapCut, Premiere Pro)  
-- Diseño gráfico (Canva, Illustrator)  
-- Gestión de redes sociales con enfoque crítico  
-- Escritura creativa y storytelling visual  
-- Trabajo en equipo y liderazgo  
-- Aprendizaje autónomo y rápido  
-- Manejo de herramientas tecnológicas y plataformas digitales
-<br><br>
-<b>🎨 Intereses</b><br>
-Baile, diseño, edición de videos, cultura visual, teatro, deportes y observación cotidiana.
-<br><br>
-<b>🌟 Enfoque personal</b><br>
-Creo en una comunicación empática, cercana y comprometida con las realidades sociales. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención.
-<br><br>
-<b>🗂️ Proyectos personales</b><br>
-- Mini documental sobre identidad y cultura visual (en desarrollo)  
-- Reel reflexivo sobre salud mental adolescente  
-- Diseño de publicaciones personalizadas para campañas temáticas
-<br><br>
-<b>🤝 Voluntariado</b><br>
-- “Regálame una sonrisa”  
-- DOMUND  
-- Empoderate.Pe
-<br><br>
-<b>📌 Referencias</b><br>
-Disponibles si se solicitan.
-</div>
-    """, unsafe_allow_html=True)
+    Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito. Desde la estética cotidiana, lo emocional y el análisis, busco comunicar con sentido.
+    """)
+
+with st.expander("📘 Formación académica"):
+    st.markdown("""
+    - C.E.P. Patrocinio de San José  
+    - Cibertec (Excel Expert, Word Expert, Inkscape y Corel Draw)  
+    - Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
+    - Estudiante de Publicidad y Comunicaciones en la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
+    - Cursos en Estudios Generales Letras y Ciencias Sociales  
+    - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 2
+    """)
+
+with st.expander("💼 Experiencia profesional"):
+    st.markdown("""
+    - Community manager en VMTeam SAC  
+    - Voluntaria activa en Empoderate.Pe  
+    - Participación en campañas escolares y concursos de expresión cultural  
+    - Creadora de contenido reflexivo audiovisual y gráfico en proyectos académicos y personales
+    """)
+
+with st.expander("🛠️ Habilidades creativas"):
+    st.markdown("""
+    - Edición de video (CapCut, Premiere Pro)  
+    - Diseño gráfico (Canva, Illustrator)  
+    - Storytelling visual e identidad de marca  
+    - Escritura creativa  
+    - Curaduría estética y narrativa digital
+    """)
+
+with st.expander("🎨 Intereses visuales y personales"):
+    st.markdown("""
+    Me apasionan el baile, el diseño editorial, la cultura visual, el teatro, la música, el arte desde lo cotidiano y los objetos que cuentan historias. Me inspiran los pequeños gestos con los que nos representamos.
+    """)
+
+with st.expander("🌟 Enfoque personal"):
+    st.markdown("""
+    Creo en una comunicación empática, cercana y comprometida con las realidades sociales. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención. Cada proyecto que desarrollo intenta equilibrar forma, fondo y conexión.
+    """)
+
+with st.expander("🗂️ Proyectos personales"):
+    st.markdown("""
+    - Mini documental sobre identidad y cultura visual (en desarrollo)  
+    - Reel reflexivo sobre salud mental adolescente  
+    - Diseño de publicaciones personalizadas para campañas temáticas  
+    - Narrativas visuales en Instagram con enfoque social
+    """)
+
+with st.expander("🤝 Voluntariado"):
+    st.markdown("""
+    - “Regálame una sonrisa”  
+    - DOMUND  
+    - Empoderate.Pe
+    """)
+
+with st.expander("📌 Referencias"):
+    st.markdown("Disponibles si se solicitan.")
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
