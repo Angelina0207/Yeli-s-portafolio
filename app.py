@@ -80,27 +80,76 @@ with st.container():
 
 st.markdown("---")
 
+# -------------------- GALERÍA VISUAL --------------------
+st.header("🖼️ Galería visual")
+
+secciones = {
+    "🎭 Expresión cultural": {
+        "baile": "Participación en concursos culturales escolares que me conectaron con mis raíces y mi cuerpo.",
+        "baile2": "Una forma de expresión que habita el escenario y transmite emociones.",
+        "teatro": "Desde niña, el teatro me enseñó a comunicar con gestos y emociones."
+    },
+    "💚 Vida cotidiana": {
+        "felicidad en amistades": "Momentos de conexión que inspiran mis narrativas visuales.",
+        "felicidad en cinamon": "El cine y el café: espacios donde observo y reflexiono.",
+        "felicidad en cremolada": "La ternura de lo simple: una cremolada y una sonrisa.",
+        "gaseosa inka cola": "Ícono peruano que me conecta con lo popular y lo identitario."
+    },
+    "🎨 Creatividad visual": {
+        "guitarrra": "Experimentar el ritmo y la armonía, también desde el sonido.",
+        "medias": "Detalles únicos que expresan personalidad y juego visual.",
+        "victor jara": "Inspiración constante: arte con mensaje y sensibilidad social."
+    },
+    "🍽️ Cultura y sabor": {
+        "alegría en comida": "El acto de comer como espacio de identidad y disfrute.",
+        "creación de kekes": "Trabajo familiar con amor, estética y sabor.",
+        "comida": "Disfrutar lo cotidiano y observar cómo nos conecta."
+    },
+    "🎬 Referentes e íconos": {
+        "star wars": "Mi lado geek y visual se inspira en universos narrativos potentes.",
+        "pulp": "Contrastes visuales y culturas alternativas que me inspiran.",
+        "pulp+smirnoff": "Juego gráfico, estética y humor combinados."
+    },
+    "🌟 Acción y comunidad": {
+        "empoderate.pe": "Organización que promueve derechos, donde aporto desde la comunicación.",
+        "actuar": "Habitar otros roles me ayuda a empatizar y observar el mundo."  
+    }
+}
+
+for titulo, items in secciones.items():
+    st.subheader(titulo)
+    cols = st.columns(3)
+    for i, (clave, descripcion) in enumerate(items.items()):
+        with cols[i % 3]:
+            st.image(endorsements[clave], use_column_width=True, caption=descripcion)
+            st.markdown("<br>", unsafe_allow_html=True)
+
+st.markdown("---")
+
 # -------------------- BIO PROFESIONAL --------------------
 st.header("📖 Biografía profesional")
 
-st.markdown("<div class='section-box'>", unsafe_allow_html=True)
+with st.expander("👤 Todo sobre mí (perfil completo)", expanded=True):
+    st.markdown("""
+    <div class='section-box' style='text-align: justify; line-height: 1.6;'>
+    """, unsafe_allow_html=True)
 
-with st.expander("💬 Quién soy", expanded=True):
+    st.subheader("💬 Quién soy")
     st.markdown("""
     Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito. Desde la estética cotidiana, lo emocional y el análisis, busco comunicar con sentido.
     """)
 
-with st.expander("📘 Formación académica"):
+    st.subheader("📘 Formación académica")
     st.markdown("""
     - C.E.P. Patrocinio de San José  
     - Cibertec (Excel Expert, Word Expert, Inkscape y Corel Draw)  
     - Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
-    - Estudiante de Publicidad y Comunicaciones en la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
+    - Estudiante de Publicidad y Comunicaciones en la Facultad de Ciencias y Artes de la Comunicación de la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
     - Cursos en Estudios Generales Letras y Ciencias Sociales  
     - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 4
     """)
 
-with st.expander("💼 Experiencia profesional"):
+    st.subheader("💼 Experiencia profesional")
     st.markdown("""
     - Community manager en VMTeam SAC  
     - Voluntaria activa en Empoderate.Pe  
@@ -108,7 +157,7 @@ with st.expander("💼 Experiencia profesional"):
     - Creadora de contenido reflexivo audiovisual y gráfico en proyectos académicos y personales
     """)
 
-with st.expander("🛠️ Habilidades creativas"):
+    st.subheader("🛠️ Habilidades creativas")
     st.markdown("""
     - Edición de video (CapCut, Premiere Pro)  
     - Diseño gráfico (Canva, Illustrator)  
@@ -117,17 +166,17 @@ with st.expander("🛠️ Habilidades creativas"):
     - Curaduría estética y narrativa digital
     """)
 
-with st.expander("🎨 Intereses visuales y personales"):
+    st.subheader("🎨 Intereses visuales y personales")
     st.markdown("""
     Me apasionan el baile, el diseño editorial, la cultura visual, el teatro, la música, el arte desde lo cotidiano y los objetos que cuentan historias. Me inspiran los pequeños gestos con los que nos representamos.
     """)
 
-with st.expander("🌟 Enfoque personal"):
+    st.subheader("🌟 Enfoque personal")
     st.markdown("""
     Creo en una comunicación empática, cercana y comprometida con las realidades sociales. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención. Cada proyecto que desarrollo intenta equilibrar forma, fondo y conexión.
     """)
 
-with st.expander("🗂️ Proyectos personales"):
+    st.subheader("🗂️ Proyectos personales")
     st.markdown("""
     - Mini documental sobre identidad y cultura visual (en desarrollo)  
     - Reel reflexivo sobre salud mental adolescente  
@@ -135,17 +184,18 @@ with st.expander("🗂️ Proyectos personales"):
     - Narrativas visuales en Instagram con enfoque social
     """)
 
-with st.expander("🤝 Voluntariado"):
+    st.subheader("🤝 Voluntariado")
     st.markdown("""
     - “Regálame una sonrisa”  
     - DOMUND  
     - Empoderate.Pe
     """)
 
-with st.expander("📌 Referencias"):
+    st.subheader("📌 Referencias")
     st.markdown("Disponibles si se solicitan.")
 
-st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("""
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
-
