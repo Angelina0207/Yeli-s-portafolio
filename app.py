@@ -57,7 +57,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -------------------- PORTADA --------------------
-st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
+st.title(f"🌿 {info['Nombre_Completo']}")
 st.markdown("""
 <div class='profile-wrapper'>
     <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
