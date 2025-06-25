@@ -1,0 +1,36 @@
+# archivo: constants.py
+
+info = {
+    "Pronombre": "Ella",
+    "Nombre": "Tu nombre aquí",
+    "Nombre_Completo": "Tu nombre completo aquí",
+    "Introducción": "Breve frase sobre ti o tu enfoque profesional.",
+    "Acerca_de": "Cuento con experiencia/interés en... Puedes describirte libremente.",
+    "Ciudad": "Ciudad, país",
+    "Correo": "tunombre@correo.com",
+    "Instagram": "https://instagram.com/tuusuario",
+    "Foto": "images/perfil.png"
+}
+
+embed_rss = {
+    "rss": """
+    <div style="overflow-y: scroll; height:500px; background-color:white;">
+        <div id="retainable-rss-embed" 
+            data-rss="https://medium.com/feed/@tuusuario"
+            data-maxcols="3" 
+            data-layout="grid"
+            data-poststyle="inline" 
+            data-readmore="Leer más" 
+            data-buttonclass="btn btn-primary" 
+            data-offset="0">
+        </div>
+    </div>
+    <script src="https://www.twilik.com/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
+    """
+}
+
+endorsements = {
+    "img1": "images/trabajo1.png",
+    "img2": "images/trabajo2.png",
+    "img3": "images/trabajo3.png"
+}
