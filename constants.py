@@ -1,10 +1,10 @@
 # archivo: constants.py
 
 info = {
-    "Pronombre": "Ella",
+    "Pronombre": "She/her",
     "Nombre": "Angie-Yeli",
     "Nombre_Completo": "Angelina Alessandra Contreras Brvao",
-    "Introducción": "Comunicadora en formación, creativa, visual y con vocación social.",
+    "Introducción": "Comunicadora en formación, creativa y con vocación social.",
     "Acerca_de": "Soy Yeli, estudiante de Publicidad y Comunicaciones, nacida el 2 de julio. Me apasiona combinar el diseño, la narración y el pensamiento crítico para construir contenidos que generen impacto social. Soy parte activa de Empoderate.Pe, donde promuevo la participación juvenil y la equidad. También he trabajado como gestora de redes sociales para VMTeam SAC, una empresa emergente, y he realizado varios documentales, entrevistas y reels con enfoque reflexivo. Disfruto explorar lo visual, crear piezas gráficas y dar vida a ideas que conecten con las personas.",
     "Ciudad": "Lima, Perú",
     "Correo": "a20231270@pucp.edu.pe",
