@@ -69,37 +69,54 @@ st.markdown("""
 # -------------------- PORTADA --------------------
 st.markdown("""
 <style>
-.title-green {
-    font-size: 3rem;
+.profile-card {
+    background: linear-gradient(135deg, #f1f8e9, #e0f2f1);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 3rem;
+}
+.title-text {
+    font-size: 3.2rem;
     font-weight: 700;
     color: #1b5e20;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-family: 'Segoe UI', sans-serif;
 }
-.subtitle-intro {
-    font-size: 1.3rem;
-    color: #388e3c;
-    margin-top: 0.5rem;
+.intro-text-large {
+    font-size: 1.4rem;
+    color: #4caf50;
     font-style: italic;
+    margin-bottom: 1rem;
+}
+.profile-photo {
+    border: 8px solid #66bb6a;
+    border-radius: 50%;
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 </style>
 """, unsafe_allow_html=True)
 
-col1, col2 = st.columns([2, 1])  # Más espacio a la izquierda para el texto
+# Contenedor tipo tarjeta
+with st.container():
+    st.markdown("<div class='profile-card'>", unsafe_allow_html=True)
 
-with col1:
-    st.markdown(f"<div class='title-green'>🌿 Portafolio de {info['Nombre_Completo']}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='subtitle-intro'>✨ {info['Introducción']}</div>", unsafe_allow_html=True)
+    col1, col2 = st.columns([2, 1])
 
-with col2:
-    try:
-        st.image(info['Foto'], width=300)
-    except:
-        st.image(
-            "https://via.placeholder.com/300?text=Sin+Foto",
-            width=300,
-            caption="Foto no disponible"
-        )
+    with col1:
+        st.markdown(f"<div class='title-text'>🌿 Portafolio de {info['Nombre_Completo']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='intro-text-large'>✨ {info['Introducción']}</div>", unsafe_allow_html=True)
+
+    with col2:
+        try:
+            st.markdown(f"<img class='profile-photo' src='data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}'/>", unsafe_allow_html=True)
+        except:
+            st.image("https://via.placeholder.com/350?text=Sin+Foto", width=350)
+
+    st.markdown("</div>", unsafe_allow_html=True)
         
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
