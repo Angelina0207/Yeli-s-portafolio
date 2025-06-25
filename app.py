@@ -24,7 +24,7 @@ st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown(f"""
 <div class="profile-wrapper">
   <h2 style="color:#2e7d32;">✨ {info['Introducción']}</h2>
-  <img src="{info['Foto']}" class="profile-pic"
+  <img src="{info['foto']}" class="profile-pic"
        onerror="this.onerror=null;this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
 </div>
 """, unsafe_allow_html=True)
@@ -40,43 +40,34 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# -------------------- GALERÍA VISUAL INTERACTIVA --------------------
-st.header("🖼️ Galería visual interactiva")
-secciones = {
-    "🎭 Expresión cultural": [
-        ("baile", "Participación en concursos culturales escolares que me conectaron con mis raíces y mi cuerpo."),
-        ("baile2", "El movimiento como forma de narrar emociones."),
-        ("teatro", "El teatro me enseñó a comunicar con cuerpo y voz.")
-    ],
-    "💚 Vida cotidiana": [
-        ("felicidad en amistades", "Conexión y alegría compartida con amigas."),
-        ("felicidad en cinamon", "Cine y café: mis momentos de reflexión."),
-        ("felicidad en cremolada", "La suavidad de lo simple en una cremolada."),
-        ("gaseosa inka cola", "Un icono peruano que inspira creatividad popular.")
-    ],
-    # ... (resto de secciones igual)
-}
 
-for titulo, imagenes in secciones.items():
-    with st.expander(titulo, expanded=False):
-        filas = [imagenes[i : i+2] for i in range(0, len(imagenes), 2)]
-        for fila in filas:
-            cols = st.columns(len(fila))
-            for col, (clave, descripcion) in zip(cols, fila):
-                with col:
-                    img_path = endorsements.get(clave)
-                    if img_path:
-                        with st.expander(f"🔍 {clave.capitalize()}", expanded=False):
-                            st.image(
-                                img_path,
-                                width=200,
-                                caption=""  # quitamos caption aquí
-                            )
-                            st.write(descripcion)
-                    else:
-                        st.warning(f"⚠️ Imagen no encontrada: {clave}")
+# --- Galería interactiva en pestañas ---
+st.header("🖼️ Galería visual")
+secciones = {
+  "🎭 Expresión cultural": ["baile", "baile2", "teatro"],
+  "💚 Vida cotidiana": ["felicidad en amistades", "felicidad en cinamon", "felicidad en cremolada", "gaseosa inka cola"],
+  "🎨 Creatividad visual": ["guitarrra", "medias", "victor jara"],
+  "🍽️ Cultura y sabor": ["alegría en comida", "creación de kekes", "comida"],
+  "🎬 Íconos": ["star wars", "pulp", "pulp+smirnoff"],
+  "🌟 Comunidad": ["empoderate.pe", "actuar"]
+}
+tabs = st.tabs(list(secciones.keys()))
+for tab, titulo in zip(tabs, secciones):
+    with tab:
+        imgs = secciones[titulo]
+        # crear filas de dos columnas
+        for i in range(0, len(imgs), 2):
+            cols = st.columns(2)
+            for col, key in zip(cols, imgs[i:i+2]):
+                img_path = endorsements.get(key)
+                if img_path:
+                    col.image(img_path, use_container_width=True, caption=key.capitalize())
+                else:
+                    col.warning(f"⚠️ Imagen no encontrada: {key}")
 
 st.markdown("---")
+
+
 
 # -------------------- BIOGRAFÍA PROFESIONAL ORGANIZADA --------------------
 st.header("📖 Biografía profesional")
