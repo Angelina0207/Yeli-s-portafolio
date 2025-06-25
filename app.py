@@ -61,7 +61,7 @@ st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown("""
 <div class='profile-wrapper'>
     <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
-    <img src='""" + info['Foto'] + """' class='profile-pic-square'>
+    <img src='" + info['Foto'] + "' class='profile-pic-square' onerror="this.onerror=null; this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
 </div>
 """, unsafe_allow_html=True)
 
@@ -117,50 +117,17 @@ st.markdown("---")
 # -------------------- GALERÍA VISUAL --------------------
 st.header("🖼️ Galería visual")
 
-secciones = {
-    "🎭 Expresión cultural": {
-        "baile": "Participación en concursos culturales escolares que me conectaron con mis raíces y mi cuerpo.",
-        "baile2": "Una forma de expresión que habita el escenario y transmite emociones.",
-        "teatro": "Desde niña, el teatro me enseñó a comunicar con gestos y emociones."
-    },
-    "💚 Vida cotidiana": {
-        "felicidad en amistades": "Momentos de conexión que inspiran mis narrativas visuales.",
-        "felicidad en cinamon": "El cine y el café: espacios donde observo y reflexiono.",
-        "felicidad en cremolada": "La ternura de lo simple: una cremolada y una sonrisa.",
-        "gaseosa inka cola": "Ícono peruano que me conecta con lo popular y lo identitario."
-    },
-    "🎨 Creatividad visual": {
-        "guitarrra": "Experimentar el ritmo y la armonía, también desde el sonido.",
-        "medias": "Detalles únicos que expresan personalidad y juego visual.",
-        "victor jara": "Inspiración constante: arte con mensaje y sensibilidad social."
-    },
-    "🍽️ Cultura y sabor": {
-        "alegría en comida": "El acto de comer como espacio de identidad y disfrute.",
-        "creación de kekes": "Trabajo familiar con amor, estética y sabor.",
-        "comida": "Disfrutar lo cotidiano y observar cómo nos conecta."
-    },
-    "🎬 Referentes e íconos": {
-        "star wars": "Mi lado geek y visual se inspira en universos narrativos potentes.",
-        "pulp": "Contrastes visuales y culturas alternativas que me inspiran.",
-        "pulp+smirnoff": "Juego gráfico, estética y humor combinados."
-    },
-    "🌟 Acción y comunidad": {
-        "empoderate.pe": "Organización que promueve derechos, donde aporto desde la comunicación.",
-        "actuar": "Habitar otros roles me ayuda a empatizar y observar el mundo."  
-    }
-}
-
-for titulo, items in secciones.items():
-    st.subheader(titulo)
-    cols = st.columns(3)
-    for i, (clave, descripcion) in enumerate(items.items()):
-        with cols[i % 3]:
-            st.image(endorsements[clave], use_column_width=True, caption=descripcion)
-            st.markdown("<br>", unsafe_allow_html=True)
+for titulo, imagenes in secciones.items():
+    with st.expander(titulo):
+        filas = [imagenes[i:i+2] for i in range(0, len(imagenes), 2)]
+        for fila in filas:
+            cols = st.columns(len(fila))
+            for col, (clave, descripcion) in zip(cols, fila):
+                with col:
+                    st.image(endorsements.get(clave, None), use_column_width=True, caption=descripcion)
 
 st.markdown("---")
 
-# -------------------- BIO PROFESIONAL --------------------
 st.header("📖 Biografía profesional")
 
 with st.expander("👤 Todo sobre mí (perfil completo)", expanded=True):
