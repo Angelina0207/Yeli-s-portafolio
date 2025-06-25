@@ -145,87 +145,69 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- GALERÍA VISUAL HTML/CSS COMPACTA ---
-st.header("🖼️ Galería visual")
-
-# CSS (si no lo has añadido antes)
+# --- GALERÍA COMPACTA CON st.image Y HOVER ZOOM ---
+# CSS para zoom y sombras en las imágenes de la galería
 st.markdown("""
 <style>
-  .gallery-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 2rem;
-  }
-  .gallery-item {
-    text-align: center;
-    width: 150px;
-  }
-  .gallery-item img {
-    width: 150px;
+  /* Solo afecta las imágenes dentro de la galería */
+  .gallery-section .stImage img {
     border-radius: 8px;
     transition: transform .3s, box-shadow .3s;
+    width: 150px !important;
   }
-  .gallery-item img:hover {
-    transform: translateY(-8px) scale(1.08);
+  .gallery-section .stImage img:hover {
+    transform: translateY(-5px) scale(1.05);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  .gallery-item p {
-    font-size: 0.8rem;
-    margin: 4px 0 0;
-    color: #2e7d32;
   }
 </style>
 """, unsafe_allow_html=True)
 
-secciones = {
-  "🎭 Expresión cultural": [
-    ("baile", "Concursos culturales que conectan mis raíces."),
-    ("baile2", "Movimiento que narra emoción."),
-    ("teatro", "Comunicación con cuerpo y voz.")
-  ],
-  "💚 Vida cotidiana": [
-    ("felicidad en amistades", "Conexión e inspiración diaria."),
-    ("felicidad en cinamon", "Reflexión entre cine y café."),
-    ("felicidad en cremolada", "La ternura de lo simple."),
-    ("gaseosa inka cola", "Ícono popular y creativo.")
-  ],
-  "🎨 Creatividad visual": [
-    ("guitarrra", "Armonía y ritmo creativo."),
-    ("medias", "Detalles que cuentan historias."),
-    ("victor jara", "Arte con mensaje social.")
-  ],
-  "🍽️ Cultura y sabor": [
-    ("alegría en comida", "Identidad y disfrute en un bocado."),
-    ("creación de kekes", "Estética y sabor familiar."),
-    ("comida", "Observación de lo cotidiano.")
-  ],
-  "🎬 Íconos": [
-    ("star wars", "Universos narrativos épicos."),
-    ("pulp", "Estéticas alternativas e impactantes."),
-    ("pulp+smirnoff", "Juego gráfico y humor.")
-  ],
-  "🌟 Comunidad": [
-    ("empoderate.pe", "Comunicación para el empoderamiento."),
-    ("actuar", "Empatía y exploración de roles.")
-  ]
-}
-
-tabs = st.tabs(list(secciones.keys()))
-for tab, cat in zip(tabs, secciones):
-    with tab:
-        html = "<div class='gallery-grid'>"
-        for key, desc in secciones[cat]:
-            img = endorsements.get(key, "")
-            html += f"""
-            <div class='gallery-item'>
-              <img src="{img}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image';">
-              <p>{desc}</p>
-            </div>
-            """
-        html += "</div>"
-        st.markdown(html, unsafe_allow_html=True)
+# Definimos la sección de la galería
+st.header("🖼️ Galería visual")
+for categoria, items in {
+    "🎭 Expresión cultural": [
+        ("baile", "Concursos culturales que conectan mis raíces."),
+        ("baile2", "Movimiento que narra emoción."),
+        ("teatro", "Comunicación con cuerpo y voz.")
+    ],
+    "💚 Vida cotidiana": [
+        ("felicidad en amistades", "Conexión e inspiración diaria."),
+        ("felicidad en cinamon", "Reflexión entre cine y café."),
+        ("felicidad en cremolada", "La ternura de lo simple."),
+        ("gaseosa inka cola", "Ícono popular y creativo.")
+    ],
+    "🎨 Creatividad visual": [
+        ("guitarrra", "Armonía y ritmo creativo."),
+        ("medias", "Detalles que cuentan historias."),
+        ("victor jara", "Arte con mensaje social.")
+    ],
+    "🍽️ Cultura y sabor": [
+        ("alegría en comida", "Identidad y disfrute en un bocado."),
+        ("creación de kekes", "Estética y sabor familiar."),
+        ("comida", "Observación de lo cotidiano.")
+    ],
+    "🎬 Íconos": [
+        ("star wars", "Universos narrativos épicos."),
+        ("pulp", "Estéticas alternativas e impactantes."),
+        ("pulp+smirnoff", "Juego gráfico y humor.")
+    ],
+    "🌟 Comunidad": [
+        ("empoderate.pe", "Comunicación para el empoderamiento."),
+        ("actuar", "Empatía y exploración de roles.")
+    ]
+}.items():
+    with st.expander(categoria, expanded=False):
+        st.markdown("<div class='gallery-section'>", unsafe_allow_html=True)
+        # Mostramos en filas de 4
+        for i in range(0, len(items), 4):
+            cols = st.columns(4)
+            for col, (clave, desc) in zip(cols, items[i:i+4]):
+                img_path = endorsements.get(clave)
+                if img_path:
+                    col.image(img_path, caption=desc, use_container_width=False)
+                else:
+                    col.warning(f"⚠️ Imagen no encontrada: {clave}")
+        st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
