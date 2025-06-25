@@ -2,7 +2,7 @@ import streamlit as st
 from constants import info, endorsements
 
 # ---------- CONFIGURACIÓN GENERAL ----------
-st.set_page_config(page_title=f"Portafolio de {info['Nombre']}", page_icon="🌿", layout="wide")
+st.set_page_config(page_title=f" {info['Nombre']}", page_icon="🌿", layout="wide")
 
 # ---------- ESTILO PERSONALIZADO ----------
 st.markdown("""
