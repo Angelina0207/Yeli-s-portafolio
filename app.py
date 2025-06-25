@@ -1,149 +1,235 @@
 import streamlit as st
-from constants import info, endorsements
+from constants import info, embed_rss, endorsements
 
-# ---------- CONFIGURACIÓN GENERAL ----------
-st.set_page_config(page_title=f" {info['Nombre']}", page_icon="🌿", layout="wide")
+# -------------------- CONFIGURACIÓN GENERAL --------------------
+st.set_page_config(page_title=f"Portafolio de {info['Nombre']}", page_icon="🌿", layout="wide")
 
-# ---------- ESTILO PERSONALIZADO ----------
+# -------------------- ESTILO PERSONALIZADO --------------------
 st.markdown("""
 <style>
-body {
-    background-color: #f3fdf6;
-    font-family: 'Segoe UI', sans-serif;
-}
-h1, h2, h3 {
-    color: #2e7d32;
-}
-.section {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-}
-.image-card {
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    text-align: center;
-}
-img {
-    border-radius: 10px;
-    transition: transform .2s;
-}
-img:hover {
-    transform: scale(1.03);
-}
-a {
-    color: #1b5e20;
-    font-weight: 600;
-}
+    body {
+        background-color: #eafaf1;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .block-container {
+        padding: 2rem 3rem;
+    }
+    h1, h2, h3 {
+        color: #2e7d32;
+    }
+    hr {
+        border: 1px solid #a5d6a7;
+    }
+    .section-box {
+        background-color: #ffffff;
+        border: 2px solid #a5d6a7;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .profile-wrapper {
+        background-color: #c8e6c9;
+        padding: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .profile-pic-square {
+        border: 5px solid #66bb6a;
+        border-radius: 16px;
+        width: 240px;
+        height: auto;
+        object-fit: cover;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        margin-top: 1rem;
+    }
+    img {
+        border-radius: 10px;
+        transition: transform .2s;
+    }
+    img:hover {
+        transform: scale(1.04);
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- PORTADA ----------
+# -------------------- PORTADA --------------------
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
-
-st.markdown(f"""
-<div style='text-align:center; margin: 2rem 0;'>
-    <img src="{info['Foto']}" width="220" style="border: 5px solid #66bb6a; border-radius: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.15);">
-    <h3 style='color:#388e3c; margin-top: 1rem;'>{info['Introducción']}</h3>
+st.markdown("""
+<div class='profile-wrapper'>
+    <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
+    <img src='""" + info['Foto'] + """' class='profile-pic-square'>
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- SOBRE MÍ ----------
-st.markdown("<div class='section'>", unsafe_allow_html=True)
-st.header("🌸 Sobre mí")
+# -------------------- SOBRE MÍ --------------------
+st.header("🌼 Sobre mí")
+with st.container():
+    st.markdown(f"""
+    <div class='section-box'>
+    <b>Pronombre:</b> {info['Pronombre']}  <br>
+    <b>Ciudad:</b> {info['Ciudad']}  <br>
+    <b>Correo:</b> <a href='mailto:{info['Correo']}'>{info['Correo']}</a>  <br>
+    <b>Instagram:</b> <a href='{info['Instagram']}'>@{info['Instagram'].split('/')[-1]}</a>  <br><br>
+    {info['Acerca_de']}
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown(f"""
-**Pronombre:** {info['Pronombre']}  
-**Ciudad:** {info['Ciudad']}  
-**Correo:** [{info['Correo']}](mailto:{info['Correo']})  
-**Instagram:** [@{info['Instagram'].split('/')[-1]}]({info['Instagram']})  
+st.markdown("---")
 
-{info['Acerca_de']}
-""")
+# -------------------- CV Y CONTACTO --------------------
 
-st.markdown("</div>", unsafe_allow_html=True)
+import base64
 
-# ---------- GALERÍA VISUAL ----------
-st.markdown("<div class='section'>", unsafe_allow_html=True)
+# Carga de CV si existe
+try:
+    with open("CV_Angelina_Contreras.pdf", "rb") as pdf_file:
+        PDFbyte = pdf_file.read()
+        b64 = base64.b64encode(PDFbyte).decode()
+        download_link = f"<a href='data:application/octet-stream;base64,{b64}' download='CV_Angelina_Contreras.pdf'>📄 Descargar mi CV</a>"
+except:
+    download_link = "📄 <i>CV no disponible temporalmente</i>"
+
+st.header("📬 Contacto y cierre")
+
+with st.container():
+    st.markdown("""
+    <div class='section-box'>
+    <h3 style='color:#2e7d32;'>🌟 Gracias por visitar mi portafolio</h3>
+    <p style='text-align: justify;'>
+    Cada parte de este portafolio es una extensión de mi forma de ver, sentir y comunicar el mundo.
+    Si te interesa colaborar, conocer más de mis proyectos o simplemente conversar sobre comunicación visual, puedes escribirme.
+    </p>
+    <ul>
+        <li>📧 <b>Correo:</b> <a href='mailto:{correo}'>{correo}</a></li>
+        <li>📸 <b>Instagram:</b> <a href='{ig}'>{ig}</a></li>
+        <li>" + download_link + "</li>
+    </ul>
+    <p>✨ Sigo explorando, aprendiendo y creando cada día.</p>
+    </div>
+    """.format(correo=info['Correo'], ig=info['Instagram']), unsafe_allow_html=True)
+
+st.markdown("---")
+
+# -------------------- GALERÍA VISUAL --------------------
 st.header("🖼️ Galería visual")
 
-for seccion, items in {
-    "🎭 Expresión cultural": ["baile", "baile2", "teatro"],
-    "💚 Vida cotidiana": ["felicidad en amistades", "felicidad en cinamon", "felicidad en cremolada", "gaseosa inka cola"],
-    "🎨 Creatividad visual": ["guitarrra", "medias", "victor jara"],
-    "🍽️ Cultura y sabor": ["alegría en comida", "creación de kekes", "comida"],
-    "🎬 Referentes e íconos": ["star wars", "pulp", "pulp+smirnoff"],
-    "🌟 Acción y comunidad": ["empoderate.pe", "actuar"]
-}.items():
-    st.subheader(seccion)
+secciones = {
+    "🎭 Expresión cultural": {
+        "baile": "Participación en concursos culturales escolares que me conectaron con mis raíces y mi cuerpo.",
+        "baile2": "Una forma de expresión que habita el escenario y transmite emociones.",
+        "teatro": "Desde niña, el teatro me enseñó a comunicar con gestos y emociones."
+    },
+    "💚 Vida cotidiana": {
+        "felicidad en amistades": "Momentos de conexión que inspiran mis narrativas visuales.",
+        "felicidad en cinamon": "El cine y el café: espacios donde observo y reflexiono.",
+        "felicidad en cremolada": "La ternura de lo simple: una cremolada y una sonrisa.",
+        "gaseosa inka cola": "Ícono peruano que me conecta con lo popular y lo identitario."
+    },
+    "🎨 Creatividad visual": {
+        "guitarrra": "Experimentar el ritmo y la armonía, también desde el sonido.",
+        "medias": "Detalles únicos que expresan personalidad y juego visual.",
+        "victor jara": "Inspiración constante: arte con mensaje y sensibilidad social."
+    },
+    "🍽️ Cultura y sabor": {
+        "alegría en comida": "El acto de comer como espacio de identidad y disfrute.",
+        "creación de kekes": "Trabajo familiar con amor, estética y sabor.",
+        "comida": "Disfrutar lo cotidiano y observar cómo nos conecta."
+    },
+    "🎬 Referentes e íconos": {
+        "star wars": "Mi lado geek y visual se inspira en universos narrativos potentes.",
+        "pulp": "Contrastes visuales y culturas alternativas que me inspiran.",
+        "pulp+smirnoff": "Juego gráfico, estética y humor combinados."
+    },
+    "🌟 Acción y comunidad": {
+        "empoderate.pe": "Organización que promueve derechos, donde aporto desde la comunicación.",
+        "actuar": "Habitar otros roles me ayuda a empatizar y observar el mundo."  
+    }
+}
+
+for titulo, items in secciones.items():
+    st.subheader(titulo)
     cols = st.columns(3)
-    for i, clave in enumerate(items):
+    for i, (clave, descripcion) in enumerate(items.items()):
         with cols[i % 3]:
-            st.markdown("<div class='image-card'>", unsafe_allow_html=True)
-            st.image(endorsements[clave], use_column_width=True)
-            st.caption(clave.capitalize())
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.image(endorsements[clave], use_column_width=True, caption=descripcion)
+            st.markdown("<br>", unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("---")
 
-# ---------- BIO PROFESIONAL ----------
-with st.expander("📖 Biografía profesional (ver más)", expanded=False):
-    st.markdown("<div class='section'>", unsafe_allow_html=True)
+# -------------------- BIO PROFESIONAL --------------------
+st.header("📖 Biografía profesional")
+
+with st.expander("👤 Todo sobre mí (perfil completo)", expanded=True):
+    st.markdown("""
+    <div class='section-box' style='text-align: justify; line-height: 1.6;'>
+    """, unsafe_allow_html=True)
 
     st.subheader("💬 Quién soy")
-    st.markdown("Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética.")
+    st.markdown("""
+    Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito. Desde la estética cotidiana, lo emocional y el análisis, busco comunicar con sentido.
+    """)
 
     st.subheader("📘 Formación académica")
     st.markdown("""
-- C.E.P. Patrocinio de San José  
-- Cursos técnicos (Cibertec, UNI)  
-- Estudiante en PUCP – Publicidad y Comunicación ITS  
-- PUCP Idiomas – Inglés hasta Intermedio 4  
-""")
+    - C.E.P. Patrocinio de San José  
+    - Cibertec (Excel Expert, Word Expert, Inkscape y Corel Draw)  
+    - Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
+    - Estudiante de Publicidad y Comunicaciones en la Facultad de Ciencias y Artes de la Comunicación de la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
+    - Cursos en Estudios Generales Letras y Ciencias Sociales  
+    - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 4
+    """)
 
-    st.subheader("💼 Experiencia")
+    st.subheader("💼 Experiencia profesional")
     st.markdown("""
-- Community Manager en VMTeam SAC  
-- Voluntaria activa en Empoderate.Pe  
-- Proyectos audiovisuales y gráficos académicos
-""")
+    - Community manager en VMTeam SAC  
+    - Voluntaria activa en Empoderate.Pe  
+    - Participación en campañas escolares y concursos de expresión cultural  
+    - Creadora de contenido reflexivo audiovisual y gráfico en proyectos académicos y personales
+    """)
 
     st.subheader("🛠️ Habilidades creativas")
     st.markdown("""
-- Edición de video (CapCut, Premiere Pro)  
-- Diseño gráfico (Canva, Illustrator)  
-- Escritura creativa y storytelling visual
-""")
+    - Edición de video (CapCut, Premiere Pro)  
+    - Diseño gráfico (Canva, Illustrator)  
+    - Storytelling visual e identidad de marca  
+    - Escritura creativa  
+    - Curaduría estética y narrativa digital
+    """)
+
+    st.subheader("🎨 Intereses visuales y personales")
+    st.markdown("""
+    Me apasionan el baile, el diseño editorial, la cultura visual, el teatro, la música, el arte desde lo cotidiano y los objetos que cuentan historias. Me inspiran los pequeños gestos con los que nos representamos.
+    """)
 
     st.subheader("🌟 Enfoque personal")
-    st.markdown("Creo en una comunicación empática y comprometida. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención.")
-
-    st.subheader("📌 Proyectos")
     st.markdown("""
-- Mini documental sobre cultura visual  
-- Reel sobre salud mental adolescente  
-- Publicaciones gráficas con enfoque social  
-""")
+    Creo en una comunicación empática, cercana y comprometida con las realidades sociales. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención. Cada proyecto que desarrollo intenta equilibrar forma, fondo y conexión.
+    """)
+
+    st.subheader("🗂️ Proyectos personales")
+    st.markdown("""
+    - Mini documental sobre identidad y cultura visual (en desarrollo)  
+    - Reel reflexivo sobre salud mental adolescente  
+    - Diseño de publicaciones personalizadas para campañas temáticas  
+    - Narrativas visuales en Instagram con enfoque social
+    """)
 
     st.subheader("🤝 Voluntariado")
     st.markdown("""
-- Regálame una sonrisa  
-- DOMUND  
-- Empoderate.Pe
-""")
+    - “Regálame una sonrisa”  
+    - DOMUND  
+    - Empoderate.Pe
+    """)
 
-    st.subheader("📍 Referencias")
+    st.subheader("📌 Referencias")
     st.markdown("Disponibles si se solicitan.")
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("""
+    </div>
+    """, unsafe_allow_html=True)
 
-# ---------- PIE DE PÁGINA ----------
-st.markdown("""
-<div style='text-align: center; padding: 1rem; font-size: 0.9rem; color: #888;'>
-    Hecho con 💚 por Yeli | Streamlit
-</div>
-""", unsafe_allow_html=True)
+st.markdown("---")
