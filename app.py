@@ -8,13 +8,14 @@ st.set_page_config(page_title=f"Portafolio de {info['Nombre']}", page_icon="🌿
 st.markdown("""
 <style>
     body {
-        background-color: #ecf7f5;
+        background-color: #e3f3ea;
+        font-family: 'Arial', sans-serif;
     }
     .block-container {
         padding: 2rem 3rem;
     }
     h1, h2, h3 {
-        color: #00695c;
+        color: #2e7d32;
     }
     hr {
         border: 1px solid #a5d6a7;
@@ -26,13 +27,19 @@ st.markdown("""
         margin-bottom: 1.5rem;
         background-color: #ffffff;
     }
+    img {
+        transition: transform .2s;
+    }
+    img:hover {
+        transform: scale(1.05);
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # -------------------- PORTADA --------------------
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown(f"### {info['Introducción']}")
-st.image(info["Foto"], caption="Foto de perfil", width=200)
+st.image(info["Foto"], caption="Foto de perfil", width=220)
 st.markdown("---")
 
 # -------------------- SOBRE MÍ --------------------
@@ -49,60 +56,63 @@ with st.container():
 
 st.markdown("---")
 
+# -------------------- BIO PROFESIONAL --------------------
+st.header("📖 Biografía profesional")
+with st.expander("Ver más sobre mi trayectoria"):
+    st.markdown("""
+**💬 Quién soy**
+Soy una joven creativa que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito.
+
+**💡 Experiencia**
+- Community manager en VMTeam SAC.
+- Voluntaria activa en Empoderate.Pe.
+- Creadora de contenido social audiovisual.
+
+**🎨 Intereses**
+Baile, diseño, edición de videos, cultura visual, teatro y pequeños detalles que transforman.
+    """)
+
+st.markdown("---")
+
 # -------------------- GALERÍA VISUAL --------------------
-st.header("🖼️ Galería visual de identidad")
+st.header("🖼️ Galería visual")
 
-st.subheader("🎭 Expresiones artísticas")
-cols1 = st.columns(3)
-with cols1[0]:
-    st.image(endorsements["baile"], caption="Baile tradicional")
-with cols1[1]:
-    st.image(endorsements["baile2"], caption="Baile escénico")
-with cols1[2]:
-    st.image(endorsements["teatro"], caption="Teatro vivencial")
+tabs = st.tabs(["🎭 Arte & Expresión", "🎶 Creatividad", "🍃 Cotidiano", "🍽️ Cultura", "🎬 Íconos", "🌟 Social"])
 
-st.subheader("🎶 Momentos de creatividad personal")
-cols2 = st.columns(3)
-with cols2[0]:
-    st.image(endorsements["guitarrra"], caption="Tocando guitarra")
-with cols2[1]:
-    st.image(endorsements["medias"], caption="Detalles que inspiran")
-with cols2[2]:
-    st.image(endorsements["victor jara"], caption="Inspiración musical")
+with tabs[0]:
+    cols = st.columns(3)
+    cols[0].image(endorsements["baile"], caption="Baile tradicional")
+    cols[1].image(endorsements["baile2"], caption="Baile escénico")
+    cols[2].image(endorsements["teatro"], caption="Teatro vivencial")
 
-st.subheader("🍃 Alegrías cotidianas")
-cols3 = st.columns(3)
-with cols3[0]:
-    st.image(endorsements["felicidad en amistades"], caption="Amistades")
-with cols3[1]:
-    st.image(endorsements["felicidad en cinamon"], caption="Momentos dulces")
-with cols3[2]:
-    st.image(endorsements["felicidad en cremolada"], caption="Compartir una cremolada")
+with tabs[1]:
+    cols = st.columns(3)
+    cols[0].image(endorsements["guitarrra"], caption="Guitarra reflexiva")
+    cols[1].image(endorsements["medias"], caption="Estilo personal")
+    cols[2].image(endorsements["victor jara"], caption="Inspiración musical")
 
-st.subheader("🍽️ Cultura y sabor")
-cols4 = st.columns(3)
-with cols4[0]:
-    st.image(endorsements["alegría en comida"], caption="Riqueza culinaria")
-with cols4[1]:
-    st.image(endorsements["gaseosa inka cola"], caption="Inka Kola y tradición")
-with cols4[2]:
-    st.image(endorsements["creación de kekes"], caption="Creación casera")
+with tabs[2]:
+    cols = st.columns(3)
+    cols[0].image(endorsements["felicidad en amistades"], caption="Amistades")
+    cols[1].image(endorsements["felicidad en cinamon"], caption="Café y reflexión")
+    cols[2].image(endorsements["felicidad en cremolada"], caption="Cremolada con memorias")
 
-st.subheader("🎬 Referencias e íconos")
-cols5 = st.columns(3)
-with cols5[0]:
-    st.image(endorsements["star wars"], caption="Star Wars y narrativa")
-with cols5[1]:
-    st.image(endorsements["pulp"], caption="Estética pulp")
-with cols5[2]:
-    st.image(endorsements["pulp+smirnoff"], caption="Juego visual y contraste")
+with tabs[3]:
+    cols = st.columns(3)
+    cols[0].image(endorsements["alegría en comida"], caption="Comida que abraza")
+    cols[1].image(endorsements["gaseosa inka cola"], caption="Inka Kola & Perú")
+    cols[2].image(endorsements["creación de kekes"], caption="Keke artesanal")
 
-st.subheader("🌟 Participación social")
-cols6 = st.columns(2)
-with cols6[0]:
-    st.image(endorsements["empoderate.pe"], caption="Voluntariado en Empoderate.Pe")
-with cols6[1]:
-    st.image(endorsements["actuar"], caption="Compromiso expresivo")
+with tabs[4]:
+    cols = st.columns(3)
+    cols[0].image(endorsements["star wars"], caption="Star Wars")
+    cols[1].image(endorsements["pulp"], caption="Estética pulp")
+    cols[2].image(endorsements["pulp+smirnoff"], caption="Juego visual")
+
+with tabs[5]:
+    cols = st.columns(2)
+    cols[0].image(endorsements["empoderate.pe"], caption="Empoderate.Pe")
+    cols[1].image(endorsements["actuar"], caption="Actuación y expresión")
 
 st.markdown("---")
 
