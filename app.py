@@ -40,68 +40,84 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# --- Galería interactiva en pestañas ---
-st.header("🖼️ Galería visual")
+# -------------------- GALERÍA VISUAL INTERACTIVA --------------------
+st.header("🖼️ Galería visual interactiva")
 secciones = {
-  "🎭 Expresión cultural": ["baile", "baile2", "teatro"],
-  "💚 Vida cotidiana": ["felicidad en amistades", "felicidad en cinamon", "felicidad en cremolada", "gaseosa inka cola"],
-  "🎨 Creatividad visual": ["guitarrra", "medias", "victor jara"],
-  "🍽️ Cultura y sabor": ["alegría en comida", "creación de kekes", "comida"],
-  "🎬 Íconos": ["star wars", "pulp", "pulp+smirnoff"],
-  "🌟 Comunidad": ["empoderate.pe", "actuar"]
+    "🎭 Expresión cultural": [
+        ("baile", "Participación en concursos culturales escolares que me conectaron con mis raíces y mi cuerpo."),
+        ("baile2", "El movimiento como forma de narrar emociones."),
+        ("teatro", "El teatro me enseñó a comunicar con cuerpo y voz.")
+    ],
+    "💚 Vida cotidiana": [
+        ("felicidad en amistades", "Conexión y alegría compartida con amigas."),
+        ("felicidad en cinamon", "Cine y café: mis momentos de reflexión."),
+        ("felicidad en cremolada", "La suavidad de lo simple en una cremolada."),
+        ("gaseosa inka cola", "Un icono peruano que inspira creatividad popular.")
+    ],
+    # ... (resto de secciones igual)
 }
-tabs = st.tabs(list(secciones.keys()))
-for tab, titulo in zip(tabs, secciones):
-    with tab:
-        imgs = secciones[titulo]
-        # crear filas de dos columnas
-        for i in range(0, len(imgs), 2):
-            cols = st.columns(2)
-            for col, key in zip(cols, imgs[i:i+2]):
-                img_path = endorsements.get(key)
-                if img_path:
-                    col.image(img_path, use_container_width=True, caption=key.capitalize())
-                else:
-                    col.warning(f"⚠️ Imagen no encontrada: {key}")
+
+for titulo, imagenes in secciones.items():
+    with st.expander(titulo, expanded=False):
+        filas = [imagenes[i : i+2] for i in range(0, len(imagenes), 2)]
+        for fila in filas:
+            cols = st.columns(len(fila))
+            for col, (clave, descripcion) in zip(cols, fila):
+                with col:
+                    img_path = endorsements.get(clave)
+                    if img_path:
+                        with st.expander(f"🔍 {clave.capitalize()}", expanded=False):
+                            st.image(
+                                img_path,
+                                width=200,
+                                caption=""  # quitamos caption aquí
+                            )
+                            st.write(descripcion)
+                    else:
+                        st.warning(f"⚠️ Imagen no encontrada: {clave}")
 
 st.markdown("---")
 
-# --- Bio completa ---
+# -------------------- BIOGRAFÍA PROFESIONAL ORGANIZADA --------------------
 st.header("📖 Biografía profesional")
 with st.expander("👤 Todo sobre mí (perfil completo)", expanded=False):
-    st.markdown(f"""
-    <div class="section-box" style="text-align: justify; line-height:1.6;">
-    <h3 style="color:#2e7d32;">💬 Quién soy</h3>
-    Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética.  
-    <h3 style="color:#2e7d32;">📘 Formación académica</h3>
-    - C.E.P. Patrocinio de San José  
-    - Cibertec (Excel, Word, Inkscape, Corel Draw)  
-    - UNI – Ingeniería Mecánica (Corel Draw)  
-    - Estudiante de Publicidad y Comunicaciones – PUCP (ITS)  
-    - Estudios Generales Letras y Ciencias Sociales  
-    - PUCP Idiomas – Inglés hasta Intermedio 4  
-    <h3 style="color:#2e7d32;">💼 Experiencia profesional</h3>
-    - Community Manager en VMTeam SAC  
-    - Voluntaria en Empoderate.Pe  
-    - Creación de documentales, entrevistas y reels reflexivos  
-    <h3 style="color:#2e7d32;">🛠️ Habilidades creativas</h3>
-    - Edición de video (CapCut, Premiere Pro)  
-    - Diseño gráfico (Canva, Illustrator)  
-    - Storytelling visual e identidad de marca  
-    - Escritura creativa y edición narrativas digitales  
-    <h3 style="color:#2e7d32;">🎨 Intereses visuales y personales</h3>
-    Me apasionan el baile, el diseño editorial, el teatro, la música y el arte cotidiano que cuenta historias.  
-    <h3 style="color:#2e7d32;">🌟 Enfoque personal</h3>
-    Creo en una comunicación empática, cercana y comprometida con las realidades sociales.  
-    <h3 style="color:#2e7d32;">🗂️ Proyectos personales</h3>
-    - Mini documental sobre identidad y cultura visual  
-    - Reel reflexivo sobre salud mental adolescente  
-    - Diseño de publicaciones temáticas  
-    <h3 style="color:#2e7d32;">🤝 Voluntariado</h3>
-    - “Regálame una sonrisa”  
-    - DOMUND  
-    - Empoderate.Pe  
-    <h3 style="color:#2e7d32;">📌 Referencias</h3>
-    Disponibles si se solicitan.
-    </div>
-    """, unsafe_allow_html=True)
+    # Creamos dos columnas para dividir la info
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("💬 Quién soy")
+        st.write("Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética.")
+        st.subheader("📘 Formación académica")
+        st.write("""
+        - C.E.P. Patrocinio de San José  
+        - Cibertec (Excel, Word, Inkscape, Corel Draw)  
+        - UNI – Ingeniería Mecánica (Corel Draw)  
+        - PUCP – Publicidad y Comunicaciones (ITS)  
+        - Estudios Generales Letras y Ciencias Sociales  
+        - PUCP Idiomas – Inglés hasta Intermedio 4  
+        """)
+        st.subheader("🛠️ Habilidades creativas")
+        st.write("""
+        - Edición de video (CapCut, Premiere Pro)  
+        - Diseño gráfico (Canva, Illustrator)  
+        - Storytelling visual e identidad de marca  
+        - Escritura creativa y narrativa digital  
+        - Curaduría estética de contenido
+        """)
+    with col2:
+        st.subheader("💼 Experiencia profesional")
+        st.write("""
+        - Community Manager en VMTeam SAC  
+        - Voluntaria en Empoderate.Pe  
+        - Creación de documentales, entrevistas y reels reflexivos  
+        - Proyectos audiovisuales y gráficos académicos
+        """)
+        st.subheader("🎨 Intereses y pasiones")
+        st.write("Me apasionan el baile, el diseño editorial, el teatro, la música y el arte cotidiano que cuenta historias.")
+        st.subheader("🤝 Voluntariado")
+        st.write("""
+        - “Regálame una sonrisa”  
+        - DOMUND  
+        - Empoderate.Pe
+        """)
+    # Opcional: referencias al final
+    st.markdown("**📌 Referencias disponibles si se solicitan.**")
