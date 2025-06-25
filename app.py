@@ -237,7 +237,24 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- GALERÍA VISUAL ----------
+# --- GALERÍA COMPACTA CON st.image Y HOVER ZOOM ---
+# CSS para zoom y sombras en las imágenes de la galería
+st.markdown("""
+<style>
+  /* Solo afecta las imágenes dentro de la galería */
+  .gallery-section .stImage img {
+    border-radius: 8px;
+    transition: transform .3s, box-shadow .3s;
+    width: 150px !important;
+  }
+  .gallery-section .stImage img:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+</style>
+""", unsafe_allow_html=True)
+
+# Definimos la sección de la galería
 st.header("🖼️ Galería visual")
 for categoria, items in {
     "🎭 Expresión cultural": [
@@ -259,7 +276,7 @@ for categoria, items in {
     "🍽️ Cultura y sabor": [
         ("alegría en comida", "Identidad y disfrute en un bocado."),
         ("creación de kekes", "Estética y sabor familiar."),
-        ("alegría en concierto", "Disfrute en eventos familiares."),
+        ("comida", "Observación de lo cotidiano.")
     ],
     "🎬 Íconos": [
         ("star wars", "Universos narrativos épicos."),
@@ -272,40 +289,60 @@ for categoria, items in {
     ]
 }.items():
     with st.expander(categoria, expanded=False):
-        st.markdown('<div class="gallery-grid">', unsafe_allow_html=True)
-        for clave, desc in items:
-            img_path = endorsements.get(clave)
-            if img_path:
-                st.markdown(f"""
-                <div class="gallery-item">
-                    <img src="{img_path}" alt="{desc}">
-                    <p>{desc}</p>
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.warning(f"⚠️ Imagen no encontrada: {clave}")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("<div class='gallery-section'>", unsafe_allow_html=True)
+        # Mostramos en filas de 4
+        for i in range(0, len(items), 4):
+            cols = st.columns(4)
+            for col, (clave, desc) in zip(cols, items[i:i+4]):
+                img_path = endorsements.get(clave)
+                if img_path:
+                    col.image(img_path, caption=desc, use_container_width=False)
+                else:
+                    col.warning(f"⚠️ Imagen no encontrada: {clave}")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------- RSS EMBED (Blogs o noticias) ----------
-st.header("📰 Últimos artículos")
-st.markdown("""
-<div style="overflow-y: scroll; height: 350px; background-color: #f1f8e9; border-radius: 15px; padding: 1rem;">
-    <div id="retainable-rss-embed" 
-        data-rss="https://medium.com/feed/@yeli-blog"
-        data-maxcols="3" 
-        data-layout="grid"
-        data-poststyle="inline" 
-        data-readmore="Leer más" 
-        data-buttonclass="btn btn-success" 
-        data-offset="0">
-    </div>
-</div>
-<script src="https://www.twilik.com/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
-""", unsafe_allow_html=True)
+st.markdown("---")
 
-# ---------- PIE DE PÁGINA ----------
-st.markdown("""
-<div style="text-align:center; padding: 1rem; color: #81c784;">
-    © 2025 Angie-Yeli • Portafolio profesional creado con 💚 en Streamlit
-</div>
-""", unsafe_allow_html=True)
+# -------------------- BIOGRAFÍA PROFESIONAL --------------------
+st.markdown("---")
+st.header("📖 Biografía profesional")
+with st.expander("👤 Perfil completo", expanded=False):
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("💬 Quién soy")
+        st.write("Comunicadora creativa e intuitiva, con vocación social y pasión por lo visual.")
+        st.subheader("📘 Formación académica")
+        st.write("""
+        - C.E.P. Patrocinio de San José  
+        - Cibertec (Excel, Word, Inkscape, Corel Draw)  
+        - UNI – Ingeniería Mecánica (Corel Draw)  
+        - PUCP – Publicidad y Comunicaciones (ITS)  
+        - Estudios Generales Letras y Ciencias Sociales  
+        - PUCP Idiomas – Inglés hasta Intermedio 4
+        """)
+        st.subheader("🛠️ Habilidades creativas")
+        st.write("""
+        - Edición de video (CapCut, Premiere Pro)  
+        - Diseño gráfico (Canva, Illustrator)  
+        - Storytelling visual e identidad de marca  
+        - Escritura creativa y narrativa digital  
+        - Curaduría estética de contenido
+        """)
+    with col2:
+        st.subheader("💼 Experiencia")
+        st.write("""
+        - Community Manager en VMTeam SAC  
+        - Voluntaria en Empoderate.Pe  
+        - Creación de documentales, entrevistas y reels reflexivos  
+        - Proyectos audiovisuales y gráficos académicos
+        """)
+        st.subheader("🎨 Pasiones")
+        st.write("Baile, diseño editorial, teatro, música y arte cotidiano que narra historias.")
+        st.subheader("🤝 Voluntariado")
+        st.write("""
+        - “Regálame una sonrisa”  
+        - DOMUND  
+        - Empoderate.Pe
+        """)
+    st.markdown("**📌 Referencias disponibles si se solicitan.**")
+
