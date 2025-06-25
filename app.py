@@ -184,7 +184,7 @@ st.markdown('<div class="container">', unsafe_allow_html=True)
 col1, col2 = st.columns([1, 2])
 with col1:
     st.markdown('<div class="photo-container">', unsafe_allow_html=True)
-    st.image(info['Foto'], width=300)
+    st.image(info['Foto'], width=700)
     st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
