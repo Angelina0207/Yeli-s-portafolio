@@ -112,30 +112,93 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# -------------------- GALERÍA INTERACTIVA --------------------
+# --- Estilos para galería compacta y hover ---
+st.markdown("""
+<style>
+  .gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .gallery-item {
+    text-align: center;
+    width: 150px;
+  }
+  .gallery-item img {
+    border-radius: 8px;
+    transition: transform .3s, box-shadow .3s;
+    width: 150px;
+    height: auto;
+  }
+  .gallery-item img:hover {
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .gallery-item p {
+    font-size: 0.8rem;
+    margin: 0.25rem 0 0;
+    color: #2e7d32;
+  }
+</style>
+""", unsafe_allow_html=True)
+
+# --- Galería visual mejorada ---
 st.header("🖼️ Galería visual")
+
 secciones = {
-  "🎭 Expresión cultural": ["baile","baile2","teatro"],
-  "💚 Vida cotidiana": ["felicidad en amistades","felicidad en cinamon","felicidad en cremolada","gaseosa inka cola"],
-  "🎨 Creatividad visual": ["guitarrra","medias","victor jara"],
-  "🍽️ Cultura y sabor": ["alegría en comida","creación de kekes","comida"],
-  "🎬 Íconos": ["star wars","pulp","pulp+smirnoff"],
-  "🌟 Comunidad": ["empoderate.pe","actuar"]
+  "🎭 Expresión cultural": [
+    ("baile", "Concursos culturales que conectan mis raíces."),
+    ("baile2", "Movimiento que narra emoción."),
+    ("teatro", "Comunicación con cuerpo y voz.")
+  ],
+  "💚 Vida cotidiana": [
+    ("felicidad en amistades", "Conexión e inspiración diaria."),
+    ("felicidad en cinamon", "Reflexión entre cine y café."),
+    ("felicidad en cremolada", "La ternura de lo simple."),
+    ("gaseosa inka cola", "Ícono popular y creativo.")
+  ],
+  "🎨 Creatividad visual": [
+    ("guitarrra", "Armonía y ritmo creativo."),
+    ("medias", "Detalles que cuentan historias."),
+    ("victor jara", "Arte con mensaje social.")
+  ],
+  "🍽️ Cultura y sabor": [
+    ("alegría en comida", "Identidad y disfrute en un bocado."),
+    ("creación de kekes", "Estética y sabor familiar."),
+    ("comida", "Observación de lo cotidiano.")
+  ],
+  "🎬 Íconos": [
+    ("star wars", "Universos narrativos épicos."),
+    ("pulp", "Estéticas alternativas e impactantes."),
+    ("pulp+smirnoff", "Juego gráfico y humor.")
+  ],
+  "🌟 Comunidad": [
+    ("empoderate.pe", "Comunicación para el empoderamiento."),
+    ("actuar", "Empatía y exploración de roles.")
+  ]
 }
+
+# Creamos pestañas por categoría
 tabs = st.tabs(list(secciones.keys()))
-for tab, cat in zip(tabs, secciones):
+for tab, categoria in zip(tabs, secciones):
     with tab:
-        imgs = secciones[cat]
-        for i in range(0, len(imgs), 2):
-            cols = st.columns(2)
-            for c, key in zip(cols, imgs[i:i+2]):
-                path = endorsements.get(key)
-                if path:
-                    with st.expander(f"🔍 {key.capitalize()}", expanded=False):
-                        c.image(path, width=200, caption=None)
-                        c.write(f"{key.capitalize()}: descripción breve sobre esta imagen.")
-                else:
-                    c.warning(f"⚠️ Imagen no encontrada: {key}")
+        st.markdown("<div class='gallery-grid'>", unsafe_allow_html=True)
+        for key, desc in secciones[categoria]:
+            img_path = endorsements.get(key)
+            if img_path:
+                st.markdown(f"""
+                  <div class='gallery-item'>
+                    <img src='{img_path}' alt='{key}'>
+                    <p>{desc}</p>
+                  </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.warning(f"⚠️ Imagen no encontrada: {key}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown("---")
 
 # -------------------- BIOGRAFÍA PROFESIONAL --------------------
 st.markdown("---")
