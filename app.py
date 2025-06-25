@@ -8,30 +8,32 @@ st.set_page_config(page_title=f"Portafolio de {info['Nombre']}", page_icon="🌿
 st.markdown("""
 <style>
     body {
-        background-color: #e3f3ea;
-        font-family: 'Arial', sans-serif;
+        background-color: #eafaf1;
+        font-family: 'Segoe UI', sans-serif;
     }
     .block-container {
         padding: 2rem 3rem;
     }
     h1, h2, h3 {
-        color: #2e7d32;
+        color: #1b5e20;
     }
     hr {
         border: 1px solid #a5d6a7;
     }
-    .card {
+    .section-box {
+        background-color: #ffffff;
+        border: 2px solid #c8e6c9;
         border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         padding: 1.5rem;
         margin-bottom: 1.5rem;
-        background-color: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
     img {
+        border-radius: 10px;
         transition: transform .2s;
     }
     img:hover {
-        transform: scale(1.05);
+        transform: scale(1.04);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -46,13 +48,15 @@ st.markdown("---")
 st.header("🌼 Sobre mí")
 with st.container():
     st.markdown(f"""
-    **Pronombre:** {info['Pronombre']}  
-    **Ciudad:** {info['Ciudad']}  
-    **Correo:** [{info['Correo']}](mailto:{info['Correo']})  
-    **Instagram:** [@{info['Instagram'].split('/')[-1]}]({info['Instagram']})  
-    
+    <div class='section-box'>
+    <b>Pronombre:</b> {info['Pronombre']}  
+    <b>Ciudad:</b> {info['Ciudad']}  
+    <b>Correo:</b> <a href='mailto:{info['Correo']}'>{info['Correo']}</a>  
+    <b>Instagram:</b> <a href='{info['Instagram']}'>@{info['Instagram'].split('/')[-1]}</a>  
+    <br><br>
     {info['Acerca_de']}
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -60,59 +64,41 @@ st.markdown("---")
 st.header("📖 Biografía profesional")
 with st.expander("Ver más sobre mi trayectoria"):
     st.markdown("""
-**💬 Quién soy**
+<div class='section-box'>
+<b>💬 Quién soy</b><br>
 Soy una joven creativa que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito.
-
-**💡 Experiencia**
-- Community manager en VMTeam SAC.
-- Voluntaria activa en Empoderate.Pe.
+<br><br>
+<b>💡 Experiencia</b><br>
+- Community manager en VMTeam SAC.<br>
+- Voluntaria activa en Empoderate.Pe.<br>
 - Creadora de contenido social audiovisual.
-
-**🎨 Intereses**
+<br><br>
+<b>🎨 Intereses</b><br>
 Baile, diseño, edición de videos, cultura visual, teatro y pequeños detalles que transforman.
-    """)
+</div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
 # -------------------- GALERÍA VISUAL --------------------
 st.header("🖼️ Galería visual")
 
-tabs = st.tabs(["🎭 Arte & Expresión", "🎶 Creatividad", "🍃 Cotidiano", "🍽️ Cultura", "🎬 Íconos", "🌟 Social"])
+secciones = {
+    "🎭 Arte & Expresión": ["baile", "baile2", "teatro"],
+    "🎶 Creatividad": ["guitarrra", "medias", "victor jara"],
+    "🍃 Cotidiano": ["felicidad en amistades", "felicidad en cinamon", "felicidad en cremolada"],
+    "🍽️ Cultura": ["alegría en comida", "gaseosa inka cola", "creación de kekes"],
+    "🎬 Íconos": ["star wars", "pulp", "pulp+smirnoff"],
+    "🌟 Social": ["empoderate.pe", "actuar"]
+}
 
-with tabs[0]:
-    cols = st.columns(3)
-    cols[0].image(endorsements["baile"], caption="Baile tradicional")
-    cols[1].image(endorsements["baile2"], caption="Baile escénico")
-    cols[2].image(endorsements["teatro"], caption="Teatro vivencial")
-
-with tabs[1]:
-    cols = st.columns(3)
-    cols[0].image(endorsements["guitarrra"], caption="Guitarra reflexiva")
-    cols[1].image(endorsements["medias"], caption="Estilo personal")
-    cols[2].image(endorsements["victor jara"], caption="Inspiración musical")
-
-with tabs[2]:
-    cols = st.columns(3)
-    cols[0].image(endorsements["felicidad en amistades"], caption="Amistades")
-    cols[1].image(endorsements["felicidad en cinamon"], caption="Café y reflexión")
-    cols[2].image(endorsements["felicidad en cremolada"], caption="Cremolada con memorias")
-
-with tabs[3]:
-    cols = st.columns(3)
-    cols[0].image(endorsements["alegría en comida"], caption="Comida que abraza")
-    cols[1].image(endorsements["gaseosa inka cola"], caption="Inka Kola & Perú")
-    cols[2].image(endorsements["creación de kekes"], caption="Keke artesanal")
-
-with tabs[4]:
-    cols = st.columns(3)
-    cols[0].image(endorsements["star wars"], caption="Star Wars")
-    cols[1].image(endorsements["pulp"], caption="Estética pulp")
-    cols[2].image(endorsements["pulp+smirnoff"], caption="Juego visual")
-
-with tabs[5]:
-    cols = st.columns(2)
-    cols[0].image(endorsements["empoderate.pe"], caption="Empoderate.Pe")
-    cols[1].image(endorsements["actuar"], caption="Actuación y expresión")
+for titulo, claves in secciones.items():
+    st.subheader(titulo)
+    cols = st.columns(len(claves))
+    for i, key in enumerate(claves):
+        with cols[i]:
+            st.image(endorsements[key], caption=key.capitalize())
+    st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("---")
 
