@@ -111,31 +111,12 @@ with st.container():
         st.markdown(f"<div class='intro-text-large'>✨ {info['Introducción']}</div>", unsafe_allow_html=True)
 
     with col2:
-    try:
-        st.markdown(f"""
-        <div style="
-            width: 360px;
-            height: 360px;
-            padding: 5px;
-            background-color: #a5d6a7;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        ">
-            <img src='data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}' 
-                style="
-                    width: 340px;
-                    height: 340px;
-                    object-fit: cover;
-                    border-radius: 12px;
-                    background-color: white;
-                "/>
-        </div>
-        """, unsafe_allow_html=True)
-    except:
-        st.image("https://via.placeholder.com/350?text=Sin+Foto", width=350)
+        try:
+            st.markdown(f"<img class='profile-photo' src='data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}'/>", unsafe_allow_html=True)
+        except:
+            st.image("https://via.placeholder.com/350?text=Sin+Foto", width=350)
+
+    st.markdown("</div>", unsafe_allow_html=True)
         
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
