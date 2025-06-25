@@ -1,156 +1,125 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px
+from constants import info, embed_rss, endorsements
 import base64
 
-# --- Datos de ejemplo (reemplaza con tus datos reales) ---
-info = {
-    "Nombre": "Yeli",
-    "Nombre_Completo": "Yeli Kangie",
-    "Foto": "https://i.imgur.com/yourphoto.jpg",  # reemplaza con tu url o ruta local
-    "Introducción": "Soy publicista y comunicadora, apasionada por el diseño y el impacto social.",
-    "Pronombre": "She/her",
-    "Ciudad": "Lima, Perú",
-    "Correo": "a20231270@pucp.edu.pe",
-    "Instagram": "https://instagram.com/wwkangie",
-    "Acerca_de": (
-        "Soy Yeli, estudiante de Publicidad y Comunicaciones, nacida el 2 de julio. Me apasiona combinar "
-        "el diseño, la narración y el pensamiento crítico para construir contenidos que generen impacto social. "
-        "Soy parte activa de Empoderate.Pe, donde promuevo la participación juvenil y la equidad. También he trabajado "
-        "como gestora de redes sociales para VMTeam SAC, una empresa emergente, y he realizado varios documentales, "
-        "entrevistas y reels con enfoque reflexivo. Disfruto explorar lo visual, crear piezas gráficas y dar vida a ideas "
-        "que conecten con las personas."
-    )
-}
-
-# --- Configuración página ---
+# -------------------- CONFIGURACIÓN GENERAL --------------------
 st.set_page_config(
     page_title=f"Portafolio de {info['Nombre']}",
     page_icon="🌿",
     layout="wide"
 )
 
-# --- Estilos CSS globales ---
+# -------------------- ESTILOS --------------------
 st.markdown("""
 <style>
   body {
-    background-color: #121212;
-    color: #e0f2f1;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e8f5e9;
+    font-family: 'Segoe UI', sans-serif;
   }
-  a {
-    color: #80cbc4 !important;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 3rem;
-  }
-  .profile-photo-container {
-    background: linear-gradient(135deg, #43a047, #66bb6a);
-    padding: 15px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(102,187,106,0.6);
-    float: left;
-  }
-  .profile-photo {
-    border-radius: 12px;
-    width: 340px;
-    height: 340px;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .profile-photo:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(102,187,106,0.9);
-  }
-  .title-portafolio {
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: #a5d6a7;
-    text-shadow: 2px 2px 6px #1b5e20;
-    margin: 0;
-  }
-  .intro-text {
-    font-size: 1.5rem;
-    max-width: 600px;
-    line-height: 1.5;
-    color: #b2dfdb;
-    font-style: italic;
-  }
-  .section-box {
-    background-color: #263238;
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  }
-  h2, h3 {
-    color: #80cbc4;
-  }
-  .contact-link {
-    color: #80cbc4;
-  }
-</style>
-""", unsafe_allow_html=True)
-
-# -------------------- PORTADA --------------------
-st.markdown("""
-<style>
-.profile-card {
-    background: linear-gradient(135deg, #f1f8e9, #e0f2f1);
+  .profile-wrapper {
+    background: linear-gradient(135deg, #dcedc8, #c8e6c9);
     padding: 3rem 2rem;
     border-radius: 20px;
+    text-align: center;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    margin-bottom: 3rem;
-}
-.title-text {
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: #1b5e20;
-    margin-bottom: 1rem;
-    font-family: 'Segoe UI', sans-serif;
-}
-.intro-text-large {
-    font-size: 1.4rem;
-    color: #4caf50;
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-.profile-photo {
-    border: 8px solid #66bb6a;
+    margin-bottom: 2rem;
+  }
+  .profile-pic {
+    border: 6px solid #4caf50;
     border-radius: 50%;
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
+    transition: transform .3s, box-shadow .3s;
+  }
+  .profile-pic:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .intro-text {
+    font-size: 1.4rem;
+    color: #2e7d32;
+    margin-top: 1rem;
+  }
+  .section-box {
+    background: #ffffff;
+    border: 2px solid #a5d6a7;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  h1, h2, h3 {
+    color: #2e7d32;
+  }
+  a {
+    color: #1b5e20;
+    text-decoration: none;
+  }
+  .tab-image {
+    border-radius: 8px;
+    transition: transform .2s;
+  }
+  .tab-image:hover {
+    transform: scale(1.03);
+  }
 </style>
 """, unsafe_allow_html=True)
 
-# Contenedor tipo tarjeta
-with st.container():
-    st.markdown("<div class='profile-card'>", unsafe_allow_html=True)
 
-    col1, col2 = st.columns([2, 1])
+# -------------------- PORTADA --------------------
+import base64
 
-    with col1:
-        st.markdown(f"<div class='title-text'>🌿 Portafolio de {info['Nombre_Completo']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='intro-text-large'>✨ {info['Introducción']}</div>", unsafe_allow_html=True)
+# Leer la foto y codificarla en base64 para usarla como fondo inline
+try:
+    with open(info['Foto'], "rb") as img_file:
+        img_base64 = base64.b64encode(img_file.read()).decode()
+except Exception:
+    img_base64 = None
 
-    with col2:
-        try:
-            st.markdown(f"<img class='profile-photo' src='data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}'/>", unsafe_allow_html=True)
-        except:
-            st.image("https://via.placeholder.com/350?text=Sin+Foto", width=350)
+st.markdown(f"""
+<style>
+.header-container {{
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin-bottom: 3rem;
+    background-image: url("data:image/jpeg;base64,{img_base64 if img_base64 else ''}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
 
-    st.markdown("</div>", unsafe_allow_html=True)
+.header-overlay {{
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.45); /* oscurece para que el texto blanco resalte */
+    border-radius: 20px;
+}}
+
+.header-text {{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    text-align: center;
+    white-space: nowrap;
+}}
+</style>
+
+<div class="header-container">
+  <div class="header-overlay"></div>
+  <div class="header-text">🌿 Portafolio de {info['Nombre_Completo']}</div>
+</div>
+""", unsafe_allow_html=True)
         
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
