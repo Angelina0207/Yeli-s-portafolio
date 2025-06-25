@@ -1,238 +1,243 @@
 import streamlit as st
-from constants import info, embed_rss, endorsements
+from constants import info, endorsements
 import base64
 
-# -------------------- CONFIGURACIÓN GENERAL --------------------
+# ---------- CONFIGURACIÓN DE LA PÁGINA ----------
 st.set_page_config(
     page_title=f"Portafolio de {info['Nombre']}",
     page_icon="🌿",
-    layout="wide"
+    layout="wide",
 )
 
-# -------------------- ESTILOS --------------------
+# ---------- ESTILOS GENERALES ----------
 st.markdown("""
 <style>
-  body {
-    background-color: #fff8e1; /* Fondo crema claro */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #2e7d32; /* Verde oscuro para textos */
-    margin: 0;
-    padding: 0 1rem;
-  }
+    /* Fondo crema y fuente */
+    body {
+        background-color: #fff8e1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #2e7d32;
+        margin: 0;
+        padding: 1rem 3rem;
+    }
 
-  .profile-wrapper {
-    background: linear-gradient(135deg, #dcedc8, #c8e6c9);
-    padding: 3rem 2rem;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-  }
+    /* Contenedor general con sombra suave y borde redondeado */
+    .container {
+        background: #f9fbe7;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        padding: 3rem;
+        margin-bottom: 3rem;
+    }
 
-  .profile-pic-container {
-    background-color: #a5d6a7; /* Verde suave para el cuadrado */
-    padding: 10px;
-    border-radius: 16px;
-    width: 320px; /* Cuadrado un poco más grande que la imagen */
-    margin: 0 auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    position: relative;
-    float: left;
-    margin-right: 2rem;
-    transition: box-shadow 0.3s ease;
-  }
+    /* Contenedor de foto con fondo verde suave y sombra */
+    .photo-container {
+        background-color: #a5d6a7;
+        border-radius: 20px;
+        padding: 12px;
+        max-width: 320px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        transition: box-shadow 0.3s ease;
+        float: left;
+        margin-right: 3rem;
+    }
+    .photo-container:hover {
+        box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+    }
+    .photo-container img {
+        border-radius: 16px;
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .photo-container img:hover {
+        transform: scale(1.07);
+    }
 
-  .profile-pic-container:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
-  }
+    /* Texto introductorio */
+    .intro-text h1 {
+        font-weight: 700;
+        font-size: 2.8rem;
+        margin-bottom: 0.4rem;
+        color: #1b5e20;
+    }
+    .intro-text p {
+        font-size: 1.4rem;
+        line-height: 1.5;
+        max-width: 700px;
+        color: #33691e;
+        margin-top: 0;
+    }
 
-  .profile-pic {
-    border-radius: 12px;
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+    /* Sección "Sobre mí" */
+    .about-section {
+        background: linear-gradient(135deg, #dcedc8, #c8e6c9);
+        border-radius: 20px;
+        padding: 2rem 3rem;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+        color: #2e7d32;
+        margin-bottom: 3rem;
+    }
+    .about-left {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        padding-right: 2rem;
+    }
+    .about-left b {
+        color: #1b5e20;
+    }
+    .about-left a {
+        color: #33691e;
+        text-decoration: none;
+    }
+    .about-left a:hover {
+        text-decoration: underline;
+    }
+    .about-line {
+        margin-bottom: 1rem;
+    }
+    .about-line i {
+        color: #43a047;
+        margin-right: 0.6rem;
+    }
+    .about-right {
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: #4e342e;
+        text-align: justify;
+    }
 
-  .profile-pic:hover {
-    transform: scale(1.07);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  }
+    /* CV y contacto */
+    .cv-contact {
+        background: #fff;
+        border: 2px solid #a5d6a7;
+        border-radius: 20px;
+        padding: 2rem 3rem;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+        color: #2e7d32;
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+    }
+    .cv-contact a {
+        color: #1b5e20;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .cv-contact a:hover {
+        text-decoration: underline;
+    }
 
-  .intro-text {
-    font-size: 1.5rem;
-    color: #2e7d32;
-    margin-top: 1rem;
-    max-width: 600px;
-    line-height: 1.5;
-  }
+    /* Galería */
+    .gallery-section {
+        margin-bottom: 3rem;
+    }
+    .gallery-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .gallery-item {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        width: 150px;
+    }
+    .gallery-item:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+    }
+    .gallery-item img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+    }
+    .gallery-item p {
+        margin: 0.5rem 0 0;
+        font-size: 0.85rem;
+        text-align: center;
+        color: #2e7d32;
+    }
 
-  .section-box {
-    background: #fff;
-    border: 2px solid #a5d6a7;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    color: #2e7d32;
-  }
-
-  h1, h2, h3 {
-    color: #2e7d32;
-  }
-
-  a {
-    color: #1b5e20;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
+    /* Biografía profesional */
+    .bio-container {
+        margin-top: 3rem;
+    }
+    .bio-subsection h3 {
+        color: #1b5e20;
+    }
+    .bio-subsection p, .bio-subsection ul {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #4e342e;
+        margin-top: 0.3rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# portada
-st.markdown(f"""
-<div class="profile-pic-container">
-    <img src="{info['Foto']}" alt="Foto de perfil" class="profile-pic">
-</div>
-<div class="intro-text">
-    <h1>🌿 Portafolio de {info['Nombre_Completo']}</h1>
-    <p>✨ {info['Introducción']}</p>
-</div>
-<div style="clear: both;"></div>
-""", unsafe_allow_html=True)
-
-# -------------------- SOBRE MÍ --------------------
-st.header("🌼 Sobre mí")
-
-st.markdown("""
-<style>
-.about-container {
-    background: linear-gradient(135deg, #ffffff, #f1f8e9);
-    border-radius: 18px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
-}
-.about-left {
-    font-size: 1.05rem;
-    color: #2e7d32;
-    padding-right: 2rem;
-}
-.about-left b {
-    color: #1b5e20;
-}
-.about-line {
-    margin-bottom: 0.6rem;
-}
-.about-line i {
-    color: #43a047;
-    margin-right: 0.5rem;
-}
-.about-right {
-    font-size: 1.1rem;
-    color: #4e342e;
-    line-height: 1.6;
-    text-align: justify;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Sección dividida en 2 columnas
-with st.container():
-    st.markdown('<div class="about-container">', unsafe_allow_html=True)
-    col1, col2 = st.columns([1, 2])
-
-    with col1:
-        st.markdown(f"""
-        <div class="about-left">
-            <div class="about-line"><i>🧍‍♀️</i><b>Pronombre:</b> {info['Pronombre']}</div>
-            <div class="about-line"><i>📍</i><b>Ciudad:</b> {info['Ciudad']}</div>
-            <div class="about-line"><i>📧</i><b>Correo:</b> <a href="mailto:{info['Correo']}">{info['Correo']}</a></div>
-            <div class="about-line"><i>📸</i><b>Instagram:</b> <a href="{info['Instagram']}">@{info['Instagram'].split('/')[-1]}</a></div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown(f"""
-        <div class="about-right">
-        {info['Acerca_de']}
-        </div>
-        """, unsafe_allow_html=True)
-
+# ---------- PORTADA ----------
+st.markdown('<div class="container">', unsafe_allow_html=True)
+col1, col2 = st.columns([1, 2])
+with col1:
+    st.markdown('<div class="photo-container">', unsafe_allow_html=True)
+    st.image(info['Foto'], width=300)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# -------------------- DESCARGA DE CV --------------------
+with col2:
+    st.markdown(f"""
+    <div class="intro-text">
+        <h1>🌿 Portafolio de {info['Nombre_Completo']}</h1>
+        <p>✨ {info['Introducción']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------- SOBRE MÍ ----------
+st.markdown('<div class="about-section">', unsafe_allow_html=True)
+st.header("🌼 Sobre mí")
+
+col1, col2 = st.columns([1, 2])
+with col1:
+    st.markdown(f"""
+    <div class="about-left">
+        <div class="about-line"><i>🧍‍♀️</i><b>Pronombre:</b> {info['Pronombre']}</div>
+        <div class="about-line"><i>📍</i><b>Ciudad:</b> {info['Ciudad']}</div>
+        <div class="about-line"><i>📧</i><b>Correo:</b> <a href="mailto:{info['Correo']}">{info['Correo']}</a></div>
+        <div class="about-line"><i>📸</i><b>Instagram:</b> <a href="{info['Instagram']}" target="_blank">@{info['Instagram'].split('/')[-1]}</a></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class="about-right">
+        {info['Acerca_de']}
+    </div>
+    """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------- DESCARGA DE CV Y CONTACTO ----------
 st.header("📂 CV y contacto")
 try:
     with open("CV_Angelina_Contreras.pdf", "rb") as f:
         pdf_bytes = f.read()
     b64 = base64.b64encode(pdf_bytes).decode()
-    download_link = f"<a href='data:application/pdf;base64,{b64}' download='CV_Angelina_Contreras.pdf'>📄 Descargar mi CV</a>"
+    download_link = f"""<a href="data:application/pdf;base64,{b64}" download="CV_Angelina_Contreras.pdf" target="_blank">📄 Descargar mi CV</a>"""
 except FileNotFoundError:
     download_link = "<i>📄 CV no disponible temporalmente</i>"
 
 st.markdown(f"""
-<div class="section-box">
-  {download_link}<br><br>
-  📧 <a href="mailto:{info['Correo']}">{info['Correo']}</a><br>
-  📸 <a href="{info['Instagram']}">@{info['Instagram'].split('/')[-1]}</a>
+<div class="cv-contact">
+    {download_link}<br><br>
+    📧 <a href="mailto:{info['Correo']}">{info['Correo']}</a><br>
+    📸 <a href="{info['Instagram']}" target="_blank">@{info['Instagram'].split('/')[-1]}</a>
 </div>
 """, unsafe_allow_html=True)
 
-# --- Estilos para galería compacta y hover ---
-st.markdown("""
-<style>
-  .gallery-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-  .gallery-item {
-    text-align: center;
-    width: 150px;
-  }
-  .gallery-item img {
-    border-radius: 8px;
-    transition: transform .3s, box-shadow .3s;
-    width: 150px;
-    height: auto;
-  }
-  .gallery-item img:hover {
-    transform: translateY(-8px) scale(1.08);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  .gallery-item p {
-    font-size: 0.8rem;
-    margin: 0.25rem 0 0;
-    color: #2e7d32;
-  }
-</style>
-""", unsafe_allow_html=True)
-
-
-# --- GALERÍA COMPACTA CON st.image Y HOVER ZOOM ---
-# CSS para zoom y sombras en las imágenes de la galería
-st.markdown("""
-<style>
-  /* Solo afecta las imágenes dentro de la galería */
-  .gallery-section .stImage img {
-    border-radius: 8px;
-    transition: transform .3s, box-shadow .3s;
-    width: 150px !important;
-  }
-  .gallery-section .stImage img:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-</style>
-""", unsafe_allow_html=True)
-
-# Definimos la sección de la galería
+# ---------- GALERÍA VISUAL ----------
 st.header("🖼️ Galería visual")
 for categoria, items in {
     "🎭 Expresión cultural": [
@@ -254,7 +259,7 @@ for categoria, items in {
     "🍽️ Cultura y sabor": [
         ("alegría en comida", "Identidad y disfrute en un bocado."),
         ("creación de kekes", "Estética y sabor familiar."),
-        ("comida", "Observación de lo cotidiano.")
+        ("alegría en concierto", "Disfrute en eventos familiares."),
     ],
     "🎬 Íconos": [
         ("star wars", "Universos narrativos épicos."),
@@ -267,59 +272,40 @@ for categoria, items in {
     ]
 }.items():
     with st.expander(categoria, expanded=False):
-        st.markdown("<div class='gallery-section'>", unsafe_allow_html=True)
-        # Mostramos en filas de 4
-        for i in range(0, len(items), 4):
-            cols = st.columns(4)
-            for col, (clave, desc) in zip(cols, items[i:i+4]):
-                img_path = endorsements.get(clave)
-                if img_path:
-                    col.image(img_path, caption=desc, use_container_width=False)
-                else:
-                    col.warning(f"⚠️ Imagen no encontrada: {clave}")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown('<div class="gallery-grid">', unsafe_allow_html=True)
+        for clave, desc in items:
+            img_path = endorsements.get(clave)
+            if img_path:
+                st.markdown(f"""
+                <div class="gallery-item">
+                    <img src="{img_path}" alt="{desc}">
+                    <p>{desc}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.warning(f"⚠️ Imagen no encontrada: {clave}")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown("---")
+# ---------- RSS EMBED (Blogs o noticias) ----------
+st.header("📰 Últimos artículos")
+st.markdown("""
+<div style="overflow-y: scroll; height: 350px; background-color: #f1f8e9; border-radius: 15px; padding: 1rem;">
+    <div id="retainable-rss-embed" 
+        data-rss="https://medium.com/feed/@yeli-blog"
+        data-maxcols="3" 
+        data-layout="grid"
+        data-poststyle="inline" 
+        data-readmore="Leer más" 
+        data-buttonclass="btn btn-success" 
+        data-offset="0">
+    </div>
+</div>
+<script src="https://www.twilik.com/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
+""", unsafe_allow_html=True)
 
-# -------------------- BIOGRAFÍA PROFESIONAL --------------------
-st.markdown("---")
-st.header("📖 Biografía profesional")
-with st.expander("👤 Perfil completo", expanded=False):
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("💬 Quién soy")
-        st.write("Comunicadora creativa e intuitiva, con vocación social y pasión por lo visual.")
-        st.subheader("📘 Formación académica")
-        st.write("""
-        - C.E.P. Patrocinio de San José  
-        - Cibertec (Excel, Word, Inkscape, Corel Draw)  
-        - UNI – Ingeniería Mecánica (Corel Draw)  
-        - PUCP – Publicidad y Comunicaciones (ITS)  
-        - Estudios Generales Letras y Ciencias Sociales  
-        - PUCP Idiomas – Inglés hasta Intermedio 4
-        """)
-        st.subheader("🛠️ Habilidades creativas")
-        st.write("""
-        - Edición de video (CapCut, Premiere Pro)  
-        - Diseño gráfico (Canva, Illustrator)  
-        - Storytelling visual e identidad de marca  
-        - Escritura creativa y narrativa digital  
-        - Curaduría estética de contenido
-        """)
-    with col2:
-        st.subheader("💼 Experiencia")
-        st.write("""
-        - Community Manager en VMTeam SAC  
-        - Voluntaria en Empoderate.Pe  
-        - Creación de documentales, entrevistas y reels reflexivos  
-        - Proyectos audiovisuales y gráficos académicos
-        """)
-        st.subheader("🎨 Pasiones")
-        st.write("Baile, diseño editorial, teatro, música y arte cotidiano que narra historias.")
-        st.subheader("🤝 Voluntariado")
-        st.write("""
-        - “Regálame una sonrisa”  
-        - DOMUND  
-        - Empoderate.Pe
-        """)
-    st.markdown("**📌 Referencias disponibles si se solicitan.**")
+# ---------- PIE DE PÁGINA ----------
+st.markdown("""
+<div style="text-align:center; padding: 1rem; color: #81c784;">
+    © 2025 Angie-Yeli • Portafolio profesional creado con 💚 en Streamlit
+</div>
+""", unsafe_allow_html=True)
