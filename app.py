@@ -179,22 +179,87 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- PORTADA ----------
-st.markdown('<div class="container">', unsafe_allow_html=True)
-col1, col2 = st.columns([1, 2])
-with col1:
-    st.markdown('<div class="photo-container">', unsafe_allow_html=True)
-    st.image(info['Foto'], width=700)
-    st.markdown('</div>', unsafe_allow_html=True)
+# ---------- PORTADA MEJORADA ----------
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap');
 
-with col2:
-    st.markdown(f"""
-    <div class="intro-text">
-        <h1>🌿 Portafolio de {info['Nombre_Completo']}</h1>
-        <p>✨ {info['Introducción']}</p>
+    .header-container {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        background: #e8f5e9;
+        padding: 2.5rem 3rem;
+        border-radius: 24px;
+        box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+        margin-bottom: 3rem;
+    }
+    .header-photo {
+        border-radius: 40px;
+        width: 320px;
+        height: 320px;
+        object-fit: cover;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        transition: transform 0.4s ease;
+        flex-shrink: 0;
+    }
+    .header-photo:hover {
+        transform: scale(1.07);
+    }
+    .header-text {
+        font-family: 'Montserrat', sans-serif;
+        color: #1b5e20;
+        max-width: 700px;
+    }
+    .header-text h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 0 0 0.3rem 0;
+        line-height: 1.1;
+    }
+    .header-text p {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        color: #33691e;
+        margin-top: 0;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+        .header-container {
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+        }
+        .header-photo {
+            width: 260px;
+            height: 260px;
+            border-radius: 32px;
+            margin-bottom: 1.8rem;
+        }
+        .header-text h1 {
+            font-size: 3rem;
+            text-align: center;
+        }
+        .header-text p {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="header-container">
+    <img class="header-photo" src="{foto}" alt="Foto de perfil">
+    <div class="header-text">
+        <h1>{nombre_completo}</h1>
+        <p>{introduccion}</p>
     </div>
-    """, unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+</div>
+""".format(
+    foto=info['Foto'],
+    nombre_completo=info['Nombre_Completo'],
+    introduccion=info['Introducción']
+), unsafe_allow_html=True)
 
 # ---------- SOBRE MÍ ----------
 st.markdown('<div class="about-section">', unsafe_allow_html=True)
