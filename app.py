@@ -120,15 +120,63 @@ with st.container():
         
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
-st.markdown(f"""
-<div class="section-box">
-  <b>Pronombre:</b> {info['Pronombre']}<br>
-  <b>Ciudad:</b> {info['Ciudad']}<br>
-  <b>Correo:</b> <a href="mailto:{info['Correo']}">{info['Correo']}</a><br>
-  <b>Instagram:</b> <a href="{info['Instagram']}">@{info['Instagram'].split('/')[-1]}</a><br><br>
-  {info['Acerca_de']}
-</div>
+
+st.markdown("""
+<style>
+.about-container {
+    background: linear-gradient(135deg, #ffffff, #f1f8e9);
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
+.about-left {
+    font-size: 1.05rem;
+    color: #2e7d32;
+    padding-right: 2rem;
+}
+.about-left b {
+    color: #1b5e20;
+}
+.about-line {
+    margin-bottom: 0.6rem;
+}
+.about-line i {
+    color: #43a047;
+    margin-right: 0.5rem;
+}
+.about-right {
+    font-size: 1.1rem;
+    color: #4e342e;
+    line-height: 1.6;
+    text-align: justify;
+}
+</style>
 """, unsafe_allow_html=True)
+
+# Sección dividida en 2 columnas
+with st.container():
+    st.markdown('<div class="about-container">', unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 2])
+
+    with col1:
+        st.markdown(f"""
+        <div class="about-left">
+            <div class="about-line"><i>🧍‍♀️</i><b>Pronombre:</b> {info['Pronombre']}</div>
+            <div class="about-line"><i>📍</i><b>Ciudad:</b> {info['Ciudad']}</div>
+            <div class="about-line"><i>📧</i><b>Correo:</b> <a href="mailto:{info['Correo']}">{info['Correo']}</a></div>
+            <div class="about-line"><i>📸</i><b>Instagram:</b> <a href="{info['Instagram']}">@{info['Instagram'].split('/')[-1]}</a></div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown(f"""
+        <div class="about-right">
+        {info['Acerca_de']}
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- DESCARGA DE CV --------------------
 st.header("📂 CV y contacto")
