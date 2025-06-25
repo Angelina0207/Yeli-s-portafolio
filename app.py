@@ -15,27 +15,36 @@ st.markdown("""
         padding: 2rem 3rem;
     }
     h1, h2, h3 {
-        color: #1b5e20;
+        color: #2e7d32;
     }
     hr {
         border: 1px solid #a5d6a7;
     }
     .section-box {
         background-color: #ffffff;
-        border: 2px solid #c8e6c9;
+        border: 2px solid #a5d6a7;
         border-radius: 12px;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
-    .profile-pic {
-        border: 4px solid #66bb6a;
-        border-radius: 50%;
-        width: 220px;
-        height: 220px;
+    .profile-wrapper {
+        background-color: #c8e6c9;
+        padding: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .profile-pic-square {
+        border: 5px solid #66bb6a;
+        border-radius: 16px;
+        width: 240px;
+        height: auto;
         object-fit: cover;
         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        margin-bottom: 0.5rem;
+        margin-top: 1rem;
     }
     img {
         border-radius: 10px;
@@ -49,9 +58,12 @@ st.markdown("""
 
 # -------------------- PORTADA --------------------
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
-st.markdown(f"### {info['Introducción']}")
-st.markdown(f"""<img src='{info['Foto']}' class='profile-pic'>""", unsafe_allow_html=True)
-st.markdown("---")
+st.markdown("""
+<div class='profile-wrapper'>
+    <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
+    <img src='""" + info['Foto'] + """' class='profile-pic-square'>
+</div>
+""", unsafe_allow_html=True)
 
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
@@ -85,7 +97,7 @@ with st.expander("📘 Formación académica"):
     - Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
     - Estudiante de Publicidad y Comunicaciones en la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
     - Cursos en Estudios Generales Letras y Ciencias Sociales  
-    - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 2
+    - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 4
     """)
 
 with st.expander("💼 Experiencia profesional"):
@@ -136,3 +148,4 @@ with st.expander("📌 Referencias"):
 st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
+
