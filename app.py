@@ -13,9 +13,13 @@ st.set_page_config(
 st.markdown("""
 <style>
   body {
-    background-color: #e8f5e9;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff8e1; /* Fondo crema claro */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2e7d32; /* Verde oscuro para textos */
+    margin: 0;
+    padding: 0 1rem;
   }
+
   .profile-wrapper {
     background: linear-gradient(135deg, #dcedc8, #c8e6c9);
     padding: 3rem 2rem;
@@ -24,104 +28,82 @@ st.markdown("""
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
   }
+
+  .profile-pic-container {
+    background-color: #a5d6a7; /* Verde suave para el cuadrado */
+    padding: 10px;
+    border-radius: 16px;
+    width: 320px; /* Cuadrado un poco más grande que la imagen */
+    margin: 0 auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    position: relative;
+    float: left;
+    margin-right: 2rem;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .profile-pic-container:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  }
+
   .profile-pic {
-    border: 6px solid #4caf50;
-    border-radius: 50%;
+    border-radius: 12px;
     width: 300px;
     height: 300px;
     object-fit: cover;
-    transition: transform .3s, box-shadow .3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+
   .profile-pic:hover {
     transform: scale(1.07);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   }
+
   .intro-text {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: #2e7d32;
     margin-top: 1rem;
+    max-width: 600px;
+    line-height: 1.5;
   }
+
   .section-box {
-    background: #ffffff;
+    background: #fff;
     border: 2px solid #a5d6a7;
     border-radius: 12px;
     padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    color: #2e7d32;
   }
+
   h1, h2, h3 {
     color: #2e7d32;
   }
+
   a {
     color: #1b5e20;
     text-decoration: none;
   }
-  .tab-image {
-    border-radius: 8px;
-    transition: transform .2s;
-  }
-  .tab-image:hover {
-    transform: scale(1.03);
+
+  a:hover {
+    text-decoration: underline;
   }
 </style>
 """, unsafe_allow_html=True)
 
-
-# -------------------- PORTADA --------------------
-import base64
-
-# Leer la foto y codificarla en base64 para usarla como fondo inline
-try:
-    with open(info['Foto'], "rb") as img_file:
-        img_base64 = base64.b64encode(img_file.read()).decode()
-except Exception:
-    img_base64 = None
-
+# portada
 st.markdown(f"""
-<style>
-.header-container {{
-    position: relative;
-    width: 100%;
-    height: 400px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    margin-bottom: 3rem;
-    background-image: url("data:image/jpeg;base64,{img_base64 if img_base64 else ''}");
-    background-size: contain;  /* Ajustamos para que la imagen se vea completa */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #e8f5e9;  /* Fondo claro para cuando haya espacio vacío */
-}}
-
-.header-overlay {{
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.45);
-    border-radius: 20px;
-}}
-
-.header-text {{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    text-align: center;
-    white-space: nowrap;
-}}
-</style>
-
-<div class="header-container">
-  <div class="header-overlay"></div>
-  <div class="header-text">🌿 Portafolio de {info['Nombre_Completo']}</div>
+<div class="profile-pic-container">
+    <img src="{info['Foto']}" alt="Foto de perfil" class="profile-pic">
 </div>
+<div class="intro-text">
+    <h1>🌿 Portafolio de {info['Nombre_Completo']}</h1>
+    <p>✨ {info['Introducción']}</p>
+</div>
+<div style="clear: both;"></div>
 """, unsafe_allow_html=True)
-        
+
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
 
