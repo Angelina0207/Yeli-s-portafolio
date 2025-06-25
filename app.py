@@ -48,13 +48,13 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Portada con foto ---
+# --- Portada con foto corregida ---
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown(f"""
 <div class="profile-wrapper">
-  <h2>✨ {info['Introducción']}</h2>
-  <img 
-    src="{info['Foto']}" 
+  <h2 style="color:#2e7d32;">✨ {info['Introducción']}</h2>
+  <img
+    src="{info['Foto']}"
     class="profile-pic"
     onerror="this.onerror=null;this.src='https://via.placeholder.com/200?text=Sin+Foto';"
   >
@@ -72,7 +72,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# --- Galería en pestañas ---
+# --- Galería interactiva en pestañas, 2 imágenes por fila ---
 st.header("🖼️ Galería visual")
 secciones = {
   "🎭 Expresión cultural": ["baile","baile2","teatro"],
@@ -86,21 +86,15 @@ tabs = st.tabs(list(secciones.keys()))
 for tab, categoria in zip(tabs, secciones):
     with tab:
         imgs = secciones[categoria]
-        # filas de 2 imágenes
         for i in range(0, len(imgs), 2):
             cols = st.columns(2)
             for col, key in zip(cols, imgs[i:i+2]):
                 img = endorsements.get(key)
                 if img:
-                    # cada imagen con expander de descripción
-                    with st.expander(f"{key.capitalize()}"):
-                        col.image(img, use_container_width=True, caption=None, output_format="auto", clamped=False)
-                        col.write(f"**{key.capitalize()}** — descripción breve acerca de {key}.")
+                    col.image(img, use_container_width=True, caption=key.replace("_"," ").capitalize())
                 else:
                     col.warning(f"⚠️ Imagen no encontrada: {key}")
-
-st.markdown("---")
-
+                    
 # --- Biografía profesional ---
 st.header("📖 Biografía profesional")
 with st.expander("👤 Perfil completo", expanded=False):
