@@ -145,8 +145,39 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- Galería visual mejorada ---
+# --- GALERÍA VISUAL HTML/CSS COMPACTA ---
 st.header("🖼️ Galería visual")
+
+# CSS (si no lo has añadido antes)
+st.markdown("""
+<style>
+  .gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+  .gallery-item {
+    text-align: center;
+    width: 150px;
+  }
+  .gallery-item img {
+    width: 150px;
+    border-radius: 8px;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .gallery-item img:hover {
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .gallery-item p {
+    font-size: 0.8rem;
+    margin: 4px 0 0;
+    color: #2e7d32;
+  }
+</style>
+""", unsafe_allow_html=True)
 
 secciones = {
   "🎭 Expresión cultural": [
@@ -181,23 +212,20 @@ secciones = {
   ]
 }
 
-# Creamos pestañas por categoría
 tabs = st.tabs(list(secciones.keys()))
-for tab, categoria in zip(tabs, secciones):
+for tab, cat in zip(tabs, secciones):
     with tab:
-        st.markdown("<div class='gallery-grid'>", unsafe_allow_html=True)
-        for key, desc in secciones[categoria]:
-            img_path = endorsements.get(key)
-            if img_path:
-                st.markdown(f"""
-                  <div class='gallery-item'>
-                    <img src='{img_path}' alt='{key}'>
-                    <p>{desc}</p>
-                  </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.warning(f"⚠️ Imagen no encontrada: {key}")
-        st.markdown("</div>", unsafe_allow_html=True)
+        html = "<div class='gallery-grid'>"
+        for key, desc in secciones[cat]:
+            img = endorsements.get(key, "")
+            html += f"""
+            <div class='gallery-item'>
+              <img src="{img}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image';">
+              <p>{desc}</p>
+            </div>
+            """
+        html += "</div>"
+        st.markdown(html, unsafe_allow_html=True)
 
 st.markdown("---")
 
