@@ -9,68 +9,53 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Estilos personalizados ---
+# --- Estilos personalizados (añade al bloque de CSS existente) ---
 st.markdown("""
 <style>
-  body { background-color: #eafaf1; font-family: 'Segoe UI', sans-serif; }
-  .profile-wrapper { 
-    text-align: center; 
-    padding: 2rem; 
-    background: #c8e6c9; 
-    border-radius: 16px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  /* Perfil */
+  .profile-wrapper {
+    background: linear-gradient(135deg, #d0f2d0, #c8e6c9);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
   }
-  .profile-pic { 
-    border: 5px solid #66bb6a; 
-    border-radius: 16px; 
-    width: 200px; 
-    height: 200px;
+  .profile-pic {
+    border: 6px solid #4caf50;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
-    transition: transform .2s;
+    transition: transform .3s;
   }
-  .profile-pic:hover { transform: scale(1.05); }
-  .section-box { 
-    background: #ffffff; 
-    border: 2px solid #a5d6a7; 
-    border-radius: 12px; 
-    padding: 1.5rem; 
-    margin: 1.5rem 0; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  .profile-pic:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
   }
-  h1, h2, h3 { color: #2e7d32; }
-  a { color: #1b5e20; text-decoration: none; }
-  .tab-image {
-    border-radius: 8px;
-    transition: transform .2s;
+  .intro-text {
+    font-size: 1.4rem;
+    color: #2e7d32;
+    margin-top: 1rem;
   }
-  .tab-image:hover { transform: scale(1.03); }
 </style>
 """, unsafe_allow_html=True)
 
-# -------------------- PORTADA CORREGIDA (st.image) --------------------
-import os
-from pathlib import Path
-
-st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
-
-# Intentamos cargar la imagen local; si no existe, usamos un placeholder
-img_path = Path(info['Foto'])
-if img_path.is_file():
-    st.image(str(img_path), width=200, caption=None)
-else:
-    st.image(
-        'https://via.placeholder.com/200?text=Sin+Foto',
-        width=200,
-        caption="Foto no disponible"
-    )
-
+# --- Portada con foto grande y fondo degradado ---
 st.markdown(f"""
-<div style="text-align:center; margin-top:1rem;">
-  <h2 style="color:#2e7d32;">✨ {info['Introducción']}</h2>
+<div class="profile-wrapper">
+  <!-- Foto de perfil -->
+  <img
+    src="{info['Foto']}"
+    class="profile-pic"
+    onerror="this.onerror=null;this.src='https://via.placeholder.com/300?text=Sin+Foto';"
+  >
+  <!-- Introducción -->
+  <div class="intro-text">
+    ✨ {info['Introducción']}
+  </div>
 </div>
 """, unsafe_allow_html=True)
-
 
 # --- Sobre mí breve ---
 st.markdown(f"""
