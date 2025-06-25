@@ -9,13 +9,42 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Estilos ---
+# --- Estilos personalizados ---
 st.markdown("""
 <style>
   body { background-color: #eafaf1; font-family: 'Segoe UI', sans-serif; }
-  .profile-wrapper { text-align: center; padding: 2rem; background: #c8e6c9; border-radius:16px; }
-  .profile-pic { border:5px solid #66bb6a; border-radius:16px; width:240px; }
-  .section-box { background:#fff; border:2px solid #a5d6a7; border-radius:12px; padding:1.5rem; margin:1.5rem 0; }
+  .profile-wrapper { 
+    text-align: center; 
+    padding: 2rem; 
+    background: #c8e6c9; 
+    border-radius: 16px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+  .profile-pic { 
+    border: 5px solid #66bb6a; 
+    border-radius: 16px; 
+    width: 200px; 
+    height: 200px;
+    object-fit: cover;
+    transition: transform .2s;
+  }
+  .profile-pic:hover { transform: scale(1.05); }
+  .section-box { 
+    background: #ffffff; 
+    border: 2px solid #a5d6a7; 
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    margin: 1.5rem 0; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  h1, h2, h3 { color: #2e7d32; }
+  a { color: #1b5e20; text-decoration: none; }
+  .tab-image {
+    border-radius: 8px;
+    transition: transform .2s;
+  }
+  .tab-image:hover { transform: scale(1.03); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -23,9 +52,12 @@ st.markdown("""
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown(f"""
 <div class="profile-wrapper">
-  <h2 style="color:#2e7d32;">✨ {info['Introducción']}</h2>
-  <img src="{info['foto']}" class="profile-pic"
-       onerror="this.onerror=null;this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
+  <h2>✨ {info['Introducción']}</h2>
+  <img 
+    src="{info['Foto']}" 
+    class="profile-pic"
+    onerror="this.onerror=null;this.src='https://via.placeholder.com/200?text=Sin+Foto';"
+  >
 </div>
 """, unsafe_allow_html=True)
 
@@ -40,43 +72,42 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-
-# --- Galería interactiva en pestañas ---
+# --- Galería en pestañas ---
 st.header("🖼️ Galería visual")
 secciones = {
-  "🎭 Expresión cultural": ["baile", "baile2", "teatro"],
-  "💚 Vida cotidiana": ["felicidad en amistades", "felicidad en cinamon", "felicidad en cremolada", "gaseosa inka cola"],
-  "🎨 Creatividad visual": ["guitarrra", "medias", "victor jara"],
-  "🍽️ Cultura y sabor": ["alegría en comida", "creación de kekes", "comida"],
-  "🎬 Íconos": ["star wars", "pulp", "pulp+smirnoff"],
-  "🌟 Comunidad": ["empoderate.pe", "actuar"]
+  "🎭 Expresión cultural": ["baile","baile2","teatro"],
+  "💚 Vida cotidiana": ["felicidad en amistades","felicidad en cinamon","felicidad en cremolada","gaseosa inka cola"],
+  "🎨 Creatividad visual": ["guitarrra","medias","victor jara"],
+  "🍽️ Cultura y sabor": ["alegría en comida","creación de kekes","comida"],
+  "🎬 Íconos": ["star wars","pulp","pulp+smirnoff"],
+  "🌟 Comunidad": ["empoderate.pe","actuar"]
 }
 tabs = st.tabs(list(secciones.keys()))
-for tab, titulo in zip(tabs, secciones):
+for tab, categoria in zip(tabs, secciones):
     with tab:
-        imgs = secciones[titulo]
-        # crear filas de dos columnas
+        imgs = secciones[categoria]
+        # filas de 2 imágenes
         for i in range(0, len(imgs), 2):
             cols = st.columns(2)
             for col, key in zip(cols, imgs[i:i+2]):
-                img_path = endorsements.get(key)
-                if img_path:
-                    col.image(img_path, use_container_width=True, caption=key.capitalize())
+                img = endorsements.get(key)
+                if img:
+                    # cada imagen con expander de descripción
+                    with st.expander(f"{key.capitalize()}"):
+                        col.image(img, use_container_width=True, caption=None, output_format="auto", clamped=False)
+                        col.write(f"**{key.capitalize()}** — descripción breve acerca de {key}.")
                 else:
                     col.warning(f"⚠️ Imagen no encontrada: {key}")
 
 st.markdown("---")
 
-
-
-# -------------------- BIOGRAFÍA PROFESIONAL ORGANIZADA --------------------
+# --- Biografía profesional ---
 st.header("📖 Biografía profesional")
-with st.expander("👤 Todo sobre mí (perfil completo)", expanded=False):
-    # Creamos dos columnas para dividir la info
+with st.expander("👤 Perfil completo", expanded=False):
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("💬 Quién soy")
-        st.write("Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética.")
+        st.write("Comunicadora creativa, intuitiva y sensible, con vocación social y pasión por lo visual.")
         st.subheader("📘 Formación académica")
         st.write("""
         - C.E.P. Patrocinio de San José  
@@ -84,7 +115,7 @@ with st.expander("👤 Todo sobre mí (perfil completo)", expanded=False):
         - UNI – Ingeniería Mecánica (Corel Draw)  
         - PUCP – Publicidad y Comunicaciones (ITS)  
         - Estudios Generales Letras y Ciencias Sociales  
-        - PUCP Idiomas – Inglés hasta Intermedio 4  
+        - PUCP Idiomas – Inglés hasta Intermedio 4
         """)
         st.subheader("🛠️ Habilidades creativas")
         st.write("""
@@ -103,12 +134,11 @@ with st.expander("👤 Todo sobre mí (perfil completo)", expanded=False):
         - Proyectos audiovisuales y gráficos académicos
         """)
         st.subheader("🎨 Intereses y pasiones")
-        st.write("Me apasionan el baile, el diseño editorial, el teatro, la música y el arte cotidiano que cuenta historias.")
+        st.write("Baile, diseño editorial, teatro, música y arte cotidiano que narra historias.")
         st.subheader("🤝 Voluntariado")
         st.write("""
         - “Regálame una sonrisa”  
         - DOMUND  
         - Empoderate.Pe
         """)
-    # Opcional: referencias al final
     st.markdown("**📌 Referencias disponibles si se solicitan.**")
