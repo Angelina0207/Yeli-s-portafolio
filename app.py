@@ -62,7 +62,8 @@ st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
 st.markdown(f"""
 <div class='profile-wrapper'>
     <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
-    <img src="{info['Foto']}" class="profile-pic-square" onerror="this.onerror=null; this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
+    <img src="{info['Foto']}" class="profile-pic-square"
+    onerror="this.onerror=null; this.src='https://via.placeholder.com/240x240?text=Foto+no+disponible';">
 </div>
 """, unsafe_allow_html=True)
 
@@ -148,6 +149,8 @@ for titulo, imagenes in secciones.items():
             cols = st.columns(len(fila))
             for col, (clave, descripcion) in zip(cols, fila):
                 with col:
-                    st.image(endorsements.get(clave, None), use_column_width=True, caption=descripcion)
-
-st.markdown("---")
+                    img_path = endorsements.get(clave)
+                    if img_path:
+                        st.image(img_path, use_container_width=True, caption=descripcion)
+                    else:
+                        st.warning(f"⚠️ Imagen '{clave}' no encontrada.")
