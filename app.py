@@ -110,39 +110,39 @@ with st.container():
         st.markdown(f"<div class='title-text'>🌿 Portafolio de {info['Nombre_Completo']}</div>", unsafe_allow_html=True)
         st.markdown(f"<div class='intro-text-large'>✨ {info['Introducción']}</div>", unsafe_allow_html=True)
 
-   with col2:
-    try:
-        st.markdown(f"""
-        <style>
-        .floating-photo-wrapper {{
-            width: 360px;
-            height: 360px;
-            background-color: #a5d6a7;
-            border-radius: 20px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: auto;
-        }}
-        .floating-photo-wrapper:hover {{
-            transform: translateY(-8px);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.25);
-        }}
-        .floating-photo {{
-            width: 340px;
-            height: 340px;
-            object-fit: cover;
-            border-radius: 12px;
-            background-color: white;
-        }}
-        </style>
+    with col2:
+        try:
+            st.markdown(f"""
+            <style>
+            .floating-photo-wrapper {{
+                width: 360px;
+                height: 360px;
+                background-color: #a5d6a7;
+                border-radius: 20px;
+                box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                margin: auto;
+            }}
+            .floating-photo-wrapper:hover {{
+                transform: translateY(-8px);
+                box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+            }}
+            .floating-photo {{
+                width: 340px;
+                height: 340px;
+                object-fit: cover;
+                border-radius: 12px;
+                background-color: white;
+            }}
+            </style>
 
-        <div class="floating-photo-wrapper">
-            <img class="floating-photo" src="data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}" />
-        </div>
-        """, unsafe_allow_html=True)
+            <div class="floating-photo-wrapper">
+                <img class="floating-photo" src="data:image/jpeg;base64,{base64.b64encode(open(info['Foto'], 'rb').read()).decode()}" />
+            </div>
+            """, unsafe_allow_html=True)
     except:
         st.image("https://via.placeholder.com/350?text=Sin+Foto", width=350)
         
