@@ -1,5 +1,6 @@
 import streamlit as st
 from constants import info, embed_rss, endorsements
+import base64
 
 # -------------------- CONFIGURACIÓN GENERAL --------------------
 st.set_page_config(page_title=f"Portafolio de {info['Nombre']}", page_icon="🌿", layout="wide")
@@ -58,61 +59,51 @@ st.markdown("""
 
 # -------------------- PORTADA --------------------
 st.title(f"🌿 Portafolio de {info['Nombre_Completo']}")
-st.markdown("""
+st.markdown(f"""
 <div class='profile-wrapper'>
     <h2 style='color:#2e7d32;'>✨ Comunicadora en formación creativa, visual y con vocación social</h2>
-    f"<img src='{info['Foto']}'" class='profile-pic-square' onerror="this.onerror=null; this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
+    <img src="{info['Foto']}" class="profile-pic-square" onerror="this.onerror=null; this.src='https://via.placeholder.com/240?text=Foto+no+disponible';">
 </div>
 """, unsafe_allow_html=True)
 
 # -------------------- SOBRE MÍ --------------------
 st.header("🌼 Sobre mí")
-with st.container():
-    st.markdown(f"""
-    <div class='section-box'>
-    <b>Pronombre:</b> {info['Pronombre']}  <br>
-    <b>Ciudad:</b> {info['Ciudad']}  <br>
-    <b>Correo:</b> <a href='mailto:{info['Correo']}'>{info['Correo']}</a>  <br>
-    <b>Instagram:</b> <a href='{info['Instagram']}'>@{info['Instagram'].split('/')[-1]}</a>  <br><br>
-    {info['Acerca_de']}
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown(f"""
+<div class='section-box'>
+<b>Pronombre:</b> {info['Pronombre']}  <br>
+<b>Ciudad:</b> {info['Ciudad']}  <br>
+<b>Correo:</b> <a href='mailto:{info['Correo']}'>{info['Correo']}</a>  <br>
+<b>Instagram:</b> <a href='{info['Instagram']}'>@{info['Instagram'].split('/')[-1]}</a>  <br><br>
+{info['Acerca_de']}
+</div>
+""", unsafe_allow_html=True)
 
-st.markdown("---")
-
-# -------------------- CV Y CONTACTO --------------------
-
-import base64
-
-# Carga de CV si existe
+# -------------------- DESCARGA DE CV --------------------
 try:
     with open("CV_Angelina_Contreras.pdf", "rb") as pdf_file:
         PDFbyte = pdf_file.read()
         b64 = base64.b64encode(PDFbyte).decode()
         download_link = f"<a href='data:application/octet-stream;base64,{b64}' download='CV_Angelina_Contreras.pdf'>📄 Descargar mi CV</a>"
 except:
-    download_link = "📄 <i>CV no disponible temporalmente</i>"
+    download_link = "<i>📄 CV no disponible temporalmente</i>"
 
+# -------------------- CONTACTO Y CIERRE --------------------
 st.header("📬 Contacto y cierre")
-
-with st.container():
-    st.markdown("""
-    <div class='section-box'>
-    <h3 style='color:#2e7d32;'>🌟 Gracias por visitar mi portafolio</h3>
-    <p style='text-align: justify;'>
-    Cada parte de este portafolio es una extensión de mi forma de ver, sentir y comunicar el mundo.
-    Si te interesa colaborar, conocer más de mis proyectos o simplemente conversar sobre comunicación visual, puedes escribirme.
-    </p>
-    <ul>
-        <li>📧 <b>Correo:</b> <a href='mailto:{correo}'>{correo}</a></li>
-        <li>📸 <b>Instagram:</b> <a href='{ig}'>{ig}</a></li>
-        {download_link}
-    </ul>
-    <p>✨ Sigo explorando, aprendiendo y creando cada día.</p>
-    </div>
-    """.format(correo=info['Correo'], ig=info['Instagram']), unsafe_allow_html=True)
-
-st.markdown("---")
+st.markdown(f"""
+<div class='section-box'>
+<h3 style='color:#2e7d32;'>🌟 Gracias por visitar mi portafolio</h3>
+<p style='text-align: justify;'>
+Cada parte de este portafolio es una extensión de mi forma de ver, sentir y comunicar el mundo.
+Si te interesa colaborar, conocer más de mis proyectos o simplemente conversar sobre comunicación visual, puedes escribirme.
+</p>
+<ul>
+    <li>📧 <b>Correo:</b> <a href='mailto:{info['Correo']}'>{info['Correo']}</a></li>
+    <li>📸 <b>Instagram:</b> <a href='{info['Instagram']}'>{info['Instagram']}</a></li>
+    <li>{download_link}</li>
+</ul>
+<p>✨ Sigo explorando, aprendiendo y creando cada día.</p>
+</div>
+""", unsafe_allow_html=True)
 
 # -------------------- GALERÍA VISUAL --------------------
 st.header("🖼️ Galería visual")
@@ -158,78 +149,5 @@ for titulo, imagenes in secciones.items():
             for col, (clave, descripcion) in zip(cols, fila):
                 with col:
                     st.image(endorsements.get(clave, None), use_column_width=True, caption=descripcion)
-
-st.markdown("---")
-
-st.header("📖 Biografía profesional")
-
-with st.expander("👤 Todo sobre mí (perfil completo)", expanded=True):
-    st.markdown("""
-    <div class='section-box' style='text-align: justify; line-height: 1.6;'>
-    """, unsafe_allow_html=True)
-
-    st.subheader("💬 Quién soy")
-    st.markdown("""
-    Soy una joven creativa e intuitiva que encuentra en la comunicación una forma de expresión sensible, política y estética. Me gusta pensar visualmente, observar con empatía y actuar con propósito. Desde la estética cotidiana, lo emocional y el análisis, busco comunicar con sentido.
-    """)
-
-    st.subheader("📘 Formación académica")
-    st.markdown("""
-    - C.E.P. Patrocinio de San José  
-    - Cibertec (Excel Expert, Word Expert, Inkscape y Corel Draw)  
-    - Universidad Nacional de Ingeniería – Facultad de Ingeniería Mecánica (Corel Draw)  
-    - Estudiante de Publicidad y Comunicaciones en la Facultad de Ciencias y Artes de la Comunicación de la Pontificia Universidad Católica del Perú (PUCP), modalidad ITS  
-    - Cursos en Estudios Generales Letras y Ciencias Sociales  
-    - PUCP Idiomas – Inglés: desde nivel básico hasta intermedio 4
-    """)
-
-    st.subheader("💼 Experiencia profesional")
-    st.markdown("""
-    - Community manager en VMTeam SAC  
-    - Voluntaria activa en Empoderate.Pe  
-    - Participación en campañas escolares y concursos de expresión cultural  
-    - Creadora de contenido reflexivo audiovisual y gráfico en proyectos académicos y personales
-    """)
-
-    st.subheader("🛠️ Habilidades creativas")
-    st.markdown("""
-    - Edición de video (CapCut, Premiere Pro)  
-    - Diseño gráfico (Canva, Illustrator)  
-    - Storytelling visual e identidad de marca  
-    - Escritura creativa  
-    - Curaduría estética y narrativa digital
-    """)
-
-    st.subheader("🎨 Intereses visuales y personales")
-    st.markdown("""
-    Me apasionan el baile, el diseño editorial, la cultura visual, el teatro, la música, el arte desde lo cotidiano y los objetos que cuentan historias. Me inspiran los pequeños gestos con los que nos representamos.
-    """)
-
-    st.subheader("🌟 Enfoque personal")
-    st.markdown("""
-    Creo en una comunicación empática, cercana y comprometida con las realidades sociales. Me gusta narrar lo cotidiano con sensibilidad y diseñar con intención. Cada proyecto que desarrollo intenta equilibrar forma, fondo y conexión.
-    """)
-
-    st.subheader("🗂️ Proyectos personales")
-    st.markdown("""
-    - Mini documental sobre identidad y cultura visual (en desarrollo)  
-    - Reel reflexivo sobre salud mental adolescente  
-    - Diseño de publicaciones personalizadas para campañas temáticas  
-    - Narrativas visuales en Instagram con enfoque social
-    """)
-
-    st.subheader("🤝 Voluntariado")
-    st.markdown("""
-    - “Regálame una sonrisa”  
-    - DOMUND  
-    - Empoderate.Pe
-    """)
-
-    st.subheader("📌 Referencias")
-    st.markdown("Disponibles si se solicitan.")
-
-    st.markdown("""
-    </div>
-    """, unsafe_allow_html=True)
 
 st.markdown("---")
