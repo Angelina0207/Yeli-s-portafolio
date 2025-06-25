@@ -88,15 +88,16 @@ st.markdown(f"""
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     margin-bottom: 3rem;
     background-image: url("data:image/jpeg;base64,{img_base64 if img_base64 else ''}");
-    background-size: cover;
+    background-size: contain;  /* Ajustamos para que la imagen se vea completa */
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #e8f5e9;  /* Fondo claro para cuando haya espacio vacío */
 }}
 
 .header-overlay {{
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.45); /* oscurece para que el texto blanco resalte */
+    background-color: rgba(0,0,0,0.45);
     border-radius: 20px;
 }}
 
