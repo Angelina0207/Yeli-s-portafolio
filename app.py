@@ -1,67 +1,101 @@
 import streamlit as st
-from constants import info, embed_rss, endorsements
+import pandas as pd
+import plotly.express as px
 import base64
 
-# -------------------- CONFIGURACIÓN GENERAL --------------------
+# --- Datos de ejemplo (reemplaza con tus datos reales) ---
+info = {
+    "Nombre": "Yeli",
+    "Nombre_Completo": "Yeli Kangie",
+    "Foto": "https://i.imgur.com/yourphoto.jpg",  # reemplaza con tu url o ruta local
+    "Introducción": "Soy publicista y comunicadora, apasionada por el diseño y el impacto social.",
+    "Pronombre": "She/her",
+    "Ciudad": "Lima, Perú",
+    "Correo": "a20231270@pucp.edu.pe",
+    "Instagram": "https://instagram.com/wwkangie",
+    "Acerca_de": (
+        "Soy Yeli, estudiante de Publicidad y Comunicaciones, nacida el 2 de julio. Me apasiona combinar "
+        "el diseño, la narración y el pensamiento crítico para construir contenidos que generen impacto social. "
+        "Soy parte activa de Empoderate.Pe, donde promuevo la participación juvenil y la equidad. También he trabajado "
+        "como gestora de redes sociales para VMTeam SAC, una empresa emergente, y he realizado varios documentales, "
+        "entrevistas y reels con enfoque reflexivo. Disfruto explorar lo visual, crear piezas gráficas y dar vida a ideas "
+        "que conecten con las personas."
+    )
+}
+
+# --- Configuración página ---
 st.set_page_config(
     page_title=f"Portafolio de {info['Nombre']}",
     page_icon="🌿",
     layout="wide"
 )
 
-# -------------------- ESTILOS --------------------
+# --- Estilos CSS globales ---
 st.markdown("""
 <style>
   body {
-    background-color: #e8f5e9;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  .profile-wrapper {
-    background: linear-gradient(135deg, #dcedc8, #c8e6c9);
-    padding: 3rem 2rem;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-  }
-  .profile-pic {
-    border: 6px solid #4caf50;
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    transition: transform .3s, box-shadow .3s;
-  }
-  .profile-pic:hover {
-    transform: scale(1.07);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  }
-  .intro-text {
-    font-size: 1.4rem;
-    color: #2e7d32;
-    margin-top: 1rem;
-  }
-  .section-box {
-    background: #ffffff;
-    border: 2px solid #a5d6a7;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
-  h1, h2, h3 {
-    color: #2e7d32;
+    background-color: #121212;
+    color: #e0f2f1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   a {
-    color: #1b5e20;
+    color: #80cbc4 !important;
     text-decoration: none;
   }
-  .tab-image {
-    border-radius: 8px;
-    transition: transform .2s;
+  a:hover {
+    text-decoration: underline;
   }
-  .tab-image:hover {
-    transform: scale(1.03);
+  .profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .profile-photo-container {
+    background: linear-gradient(135deg, #43a047, #66bb6a);
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(102,187,106,0.6);
+    float: left;
+  }
+  .profile-photo {
+    border-radius: 12px;
+    width: 340px;
+    height: 340px;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .profile-photo:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(102,187,106,0.9);
+  }
+  .title-portafolio {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #a5d6a7;
+    text-shadow: 2px 2px 6px #1b5e20;
+    margin: 0;
+  }
+  .intro-text {
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.5;
+    color: #b2dfdb;
+    font-style: italic;
+  }
+  .section-box {
+    background-color: #263238;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+  h2, h3 {
+    color: #80cbc4;
+  }
+  .contact-link {
+    color: #80cbc4;
   }
 </style>
 """, unsafe_allow_html=True)
